@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        data_tests:
+          - not_null
+  - name: stg_orders
+    columns:
+      - name: order_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: order_id
+        data_tests:
+          - not_null
+      - name: customer_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+  - name: stg_order_items
+    columns:
+      - name: order_item_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: item_id
+        data_tests:
+          - not_null
+      - name: order_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+      
