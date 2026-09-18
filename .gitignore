@@ -16,3 +16,7 @@ logs/
 
 # macOS
 .DS_Store
+
+# Secrets
+.env
+
