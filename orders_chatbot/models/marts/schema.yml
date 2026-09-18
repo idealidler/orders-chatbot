@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: obt_orders
+    description: >
+      One row per order line item (order-item grain). Denormalized table
+      combining order item, order, and customer attributes for LLM-driven
+      business KPI queries. Because the grain is order-item, counting
+      distinct orders requires either `count(distinct order_id)` or
+      `sum(case when is_first_item_in_order then 1 else 0 end)` —
+      `count(*)` will overcount orders by the average number of items
+      per order.
+    columns:
+      - name: order_item_sk
+        description: Surrogate key uniquely identifying this order line item row (the table's grain).
+        data_tests:
+          - unique
+          - not_null
+      - name: item_id
+        description: Natural/business key for the order line item, as assigned by the source system.
+        data_tests:
+          - not_null
+      - name: product_name
+        description: Name of the product sold on this line item.
+      - name: category
+        description: "Product category. Observed values: Electronics, Furniture, Accessories."
+      - name: price
+        description: Unit price of the product at time of sale, in the source currency.
+      - name: quantity
+        description: Number of units of the product purchased on this line item.
+      - name: line_item_revenue
+        description: >
+          Precomputed revenue for this line item, calculated as price * quantity.
+          Use this column directly for revenue KPIs rather than multiplying
+          price and quantity manually.
+        data_tests:
+          - not_null
+      - name: order_id
+        description: >
+          Natural/business key of the parent order. Multiple line items share
+          the same order_id. Do not use count(*) on this column to count
+          orders — use count(distinct order_id) or sum the
+          is_first_item_in_order flag instead.
+        data_tests:
+          - not_null
+      - name: order_date
+        description: Date the order was placed.
+      - name: order_status
+        description: "Current status of the order. Observed values: Processing, Completed, Cancelled, Returned."
+      - name: customer_id
+        description: Natural/business key of the customer who placed the order.
+        data_tests:
+          - not_null
+      - name: first_name
+        description: First name of the customer who placed the order.
+      - name: segment
+        description: "Customer segment. Observed values: Enterprise, Mid-Market, SMB."
+      - name: region
+        description: "Customer's geographic region. Observed values: North America, Europe, Asia, LATAM."
+      - name: signup_date
+        description: Date the customer signed up.
+      - name: is_first_item_in_order
+        description: >
+          True for exactly one line item per order_id, false for all other
+          line items belonging to that order. Use
+          sum(case when is_first_item_in_order then 1 else 0 end) to safely
+          count distinct orders without deduplicating manually.
+        data_tests:
+          - not_null

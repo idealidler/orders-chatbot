@@ -1,0 +1,55 @@
+"""FastAPI backend: natural-language question -> LLM SQL -> validated,
+read-only execution against obt_orders -> JSON response for the frontend."""
+import logging
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
+from .db import run_query
+from .llm import generate_sql
+from .sql_guard import UnsafeSQLError, validate_select_only
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = FastAPI(title="Orders Chatbot API")
+
+# Frontend dev server (Vite default) - tighten this before any real deployment.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["POST"],
+    allow_headers=["*"],
+)
+
+
+class QuestionRequest(BaseModel):
+    question: str
+
+
+@app.post("/query")
+def query(request: QuestionRequest):
+    llm_output = generate_sql(request.question)
+
+    if llm_output.startswith("CANNOT_ANSWER"):
+        reason = llm_output.split(":", 1)[1].strip() if ":" in llm_output else ""
+        return {"status": "cannot_answer", "reason": reason}
+
+    try:
+        safe_sql = validate_select_only(llm_output)
+        rows = run_query(safe_sql)
+    except UnsafeSQLError:
+        logger.warning("Blocked unsafe SQL from LLM: %s", llm_output)
+        raise HTTPException(
+            status_code=500,
+            detail="Something went wrong generating a safe query. Please try rephrasing your question.",
+        )
+    except Exception:
+        logger.exception("Unexpected error executing query")
+        raise HTTPException(
+            status_code=500,
+            detail="Something went wrong running your query. Please try again.",
+        )
+
+    return {"status": "ok", "sql": safe_sql, "rows": rows}
