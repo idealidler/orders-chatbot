@@ -3,11 +3,13 @@ queries. Opening the connection with read_only=True enforces at the
 storage-engine level that no write ever succeeds here, regardless of
 what SQL text is passed in — a structural guarantee, not just a check
 in application code."""
+import os
 from pathlib import Path
 
 import duckdb
 
-DB_PATH = Path(__file__).resolve().parents[2] / "orders_chatbot.duckdb"
+_default_path = Path(__file__).resolve().parents[2] / "orders_chatbot.duckdb"
+DB_PATH = Path(os.environ.get("DUCKDB_PATH", str(_default_path)))
 
 # Cap rows returned to the LLM/UI to avoid huge payloads from a broad query.
 MAX_ROWS = 1000

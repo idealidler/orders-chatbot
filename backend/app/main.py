@@ -1,6 +1,7 @@
 """FastAPI backend: natural-language question -> LLM SQL -> validated,
 read-only execution against obt_orders -> JSON response for the frontend."""
 import logging
+import os
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,10 +16,14 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Orders Chatbot API")
 
-# Frontend dev server (Vite default) - tighten this before any real deployment.
+# Comma-separated list of allowed frontend origins, e.g.
+# "http://localhost:5173,https://orders-chatbot.vercel.app"
+_default_origins = "http://localhost:5173"
+allowed_origins = os.environ.get("CORS_ORIGINS", _default_origins).split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_methods=["POST"],
     allow_headers=["*"],
 )
