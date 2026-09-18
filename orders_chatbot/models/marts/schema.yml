@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: obt_orders
+    columns:
+      - name: order_item_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: item_id
+        data_tests:
+          - not_null
+      - name: order_id
+        data_tests:
+          - not_null
+      - name: customer_id
+        data_tests:
+          - not_null
+      - name: line_item_revenue
+        data_tests:
+          - not_null
+      - name: is_first_item_in_order
+        data_tests:
+          - not_null
