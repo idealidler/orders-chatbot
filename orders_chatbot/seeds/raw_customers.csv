@@ -1,0 +1,501 @@
+customer_id,first_name,segment,region,signup_date
+C-0001,George,Mid-Market,North America,2024-10-16
+C-0002,Tom,SMB,North America,2023-04-25
+C-0003,Olivia,SMB,Asia,2023-01-26
+C-0004,Kevin,SMB,LATAM,2025-01-29
+C-0005,Hannah,SMB,Europe,2023-10-09
+C-0006,Uma,Mid-Market,Europe,2023-09-08
+C-0007,George,Enterprise,LATAM,2023-08-17
+C-0008,Zane,SMB,Europe,2023-05-23
+C-0009,Sam,SMB,North America,2025-01-24
+C-0010,Wendy,Enterprise,LATAM,2023-04-15
+C-0011,Kevin,SMB,North America,2024-11-23
+C-0012,Kevin,Enterprise,Europe,2025-01-28
+C-0013,Xander,Enterprise,North America,2025-07-02
+C-0014,Uma,SMB,North America,2024-07-12
+C-0015,David,Mid-Market,North America,2023-03-31
+C-0016,Hannah,SMB,Asia,2024-08-27
+C-0017,Xander,Enterprise,North America,2024-03-08
+C-0018,Charlie,Mid-Market,North America,2023-02-02
+C-0019,Victor,Mid-Market,North America,2023-01-31
+C-0020,Uma,SMB,Europe,2023-04-06
+C-0021,Bob,SMB,LATAM,2023-08-12
+C-0022,Xander,SMB,Europe,2023-08-27
+C-0023,Liam,Enterprise,Europe,2024-06-01
+C-0024,Fiona,Mid-Market,Asia,2024-09-08
+C-0025,Bob,Mid-Market,Europe,2023-01-28
+C-0026,Uma,SMB,North America,2024-07-28
+C-0027,Alice,Enterprise,North America,2023-07-23
+C-0028,Liam,Mid-Market,North America,2025-01-03
+C-0029,Zane,SMB,North America,2024-10-27
+C-0030,Victor,SMB,North America,2024-12-19
+C-0031,Liam,SMB,Asia,2024-07-12
+C-0032,Yara,SMB,North America,2024-03-05
+C-0033,Quinn,Mid-Market,Europe,2023-08-14
+C-0034,Julia,Mid-Market,Europe,2024-04-04
+C-0035,Peter,Mid-Market,North America,2024-08-26
+C-0036,Olivia,SMB,Asia,2023-10-12
+C-0037,Olivia,Mid-Market,Europe,2025-04-08
+C-0038,Sam,SMB,North America,2025-06-09
+C-0039,Liam,SMB,Europe,2023-01-07
+C-0040,Wendy,Enterprise,Europe,2025-02-16
+C-0041,Tom,Mid-Market,Europe,2025-04-05
+C-0042,Yara,Mid-Market,Europe,2023-06-13
+C-0043,Charlie,SMB,Europe,2024-12-15
+C-0044,Eva,Mid-Market,Asia,2024-03-08
+C-0045,Sam,SMB,North America,2023-12-15
+C-0046,George,SMB,North America,2023-10-12
+C-0047,Uma,SMB,North America,2023-06-09
+C-0048,Ivan,SMB,Asia,2023-08-09
+C-0049,George,SMB,North America,2025-09-07
+C-0050,Rachel,Enterprise,Asia,2025-02-20
+C-0051,David,SMB,Europe,2023-12-11
+C-0052,Yara,SMB,Asia,2023-04-15
+C-0053,Noah,SMB,LATAM,2023-04-05
+C-0054,Rachel,SMB,Asia,2024-01-25
+C-0055,Zane,SMB,Asia,2023-04-10
+C-0056,Ivan,SMB,North America,2024-01-03
+C-0057,Zane,SMB,Europe,2025-05-17
+C-0058,Uma,SMB,North America,2023-12-19
+C-0059,Bob,SMB,North America,2024-09-10
+C-0060,Tom,SMB,Europe,2023-09-28
+C-0061,Olivia,Mid-Market,Europe,2025-04-06
+C-0062,George,Enterprise,North America,2023-02-14
+C-0063,Liam,SMB,Europe,2025-01-17
+C-0064,Hannah,Mid-Market,Asia,2024-04-15
+C-0065,Olivia,SMB,Europe,2024-07-03
+C-0066,Charlie,SMB,Europe,2023-05-08
+C-0067,Noah,SMB,Asia,2025-09-23
+C-0068,Quinn,SMB,LATAM,2025-08-02
+C-0069,David,Mid-Market,Europe,2024-01-23
+C-0070,Rachel,Enterprise,Asia,2023-03-22
+C-0071,Hannah,SMB,LATAM,2024-07-19
+C-0072,David,SMB,LATAM,2023-10-28
+C-0073,Bob,Mid-Market,North America,2025-04-29
+C-0074,Fiona,SMB,North America,2024-10-05
+C-0075,Victor,SMB,North America,2024-09-25
+C-0076,Julia,SMB,North America,2025-06-25
+C-0077,David,Mid-Market,Europe,2025-06-01
+C-0078,Victor,SMB,Europe,2024-01-06
+C-0079,Rachel,SMB,Asia,2024-08-14
+C-0080,Zane,SMB,North America,2023-07-16
+C-0081,Liam,SMB,Asia,2024-12-22
+C-0082,Bob,SMB,Europe,2023-03-13
+C-0083,Julia,SMB,Europe,2023-02-16
+C-0084,David,Enterprise,LATAM,2024-11-08
+C-0085,Noah,Enterprise,Europe,2023-08-22
+C-0086,Peter,Mid-Market,North America,2025-03-02
+C-0087,Olivia,Mid-Market,Asia,2023-10-24
+C-0088,Hannah,SMB,North America,2023-03-23
+C-0089,Noah,Mid-Market,North America,2025-05-25
+C-0090,Wendy,SMB,Asia,2023-08-27
+C-0091,Yara,SMB,North America,2025-06-06
+C-0092,Hannah,SMB,Asia,2023-04-14
+C-0093,Uma,Enterprise,North America,2024-01-25
+C-0094,Peter,Enterprise,Asia,2023-10-12
+C-0095,Mia,SMB,North America,2024-04-09
+C-0096,Rachel,SMB,LATAM,2024-10-12
+C-0097,Olivia,SMB,Asia,2025-05-04
+C-0098,Uma,Mid-Market,North America,2024-01-09
+C-0099,Xander,Mid-Market,Europe,2023-06-16
+C-0100,Zane,Enterprise,LATAM,2024-01-15
+C-0101,Yara,Mid-Market,Europe,2023-12-30
+C-0102,Mia,Mid-Market,North America,2023-08-03
+C-0103,Ivan,Mid-Market,Europe,2024-11-17
+C-0104,Olivia,Enterprise,Europe,2023-10-01
+C-0105,Mia,Mid-Market,Europe,2024-12-19
+C-0106,Alice,SMB,Europe,2025-08-17
+C-0107,Yara,Mid-Market,North America,2024-11-30
+C-0108,George,Mid-Market,North America,2024-10-25
+C-0109,Ivan,SMB,Europe,2023-03-15
+C-0110,Xander,Mid-Market,North America,2024-09-15
+C-0111,Alice,Mid-Market,North America,2024-10-12
+C-0112,Liam,Mid-Market,LATAM,2023-06-25
+C-0113,Hannah,SMB,Europe,2024-06-30
+C-0114,Xander,SMB,Europe,2025-01-16
+C-0115,Kevin,SMB,Asia,2023-09-08
+C-0116,Sam,Mid-Market,Europe,2023-06-17
+C-0117,Quinn,Enterprise,Asia,2024-04-18
+C-0118,Hannah,SMB,Europe,2024-01-24
+C-0119,Charlie,SMB,North America,2023-10-04
+C-0120,Charlie,SMB,North America,2025-08-05
+C-0121,Alice,Mid-Market,Europe,2024-10-17
+C-0122,Eva,Mid-Market,Europe,2024-12-05
+C-0123,Julia,SMB,North America,2024-07-24
+C-0124,George,Mid-Market,North America,2023-08-13
+C-0125,Zane,SMB,North America,2024-12-02
+C-0126,Ivan,SMB,North America,2023-11-29
+C-0127,George,Mid-Market,Europe,2025-05-13
+C-0128,Ivan,SMB,North America,2025-02-25
+C-0129,Hannah,SMB,Europe,2025-03-05
+C-0130,Liam,Mid-Market,Europe,2023-02-27
+C-0131,Bob,SMB,Europe,2023-08-23
+C-0132,Alice,SMB,Asia,2025-04-21
+C-0133,Peter,SMB,North America,2023-02-02
+C-0134,Wendy,SMB,Asia,2025-04-04
+C-0135,Wendy,SMB,North America,2023-11-20
+C-0136,Xander,SMB,North America,2024-02-15
+C-0137,Eva,Mid-Market,LATAM,2023-10-02
+C-0138,Charlie,Mid-Market,North America,2023-03-09
+C-0139,Liam,Mid-Market,North America,2023-08-05
+C-0140,Hannah,Mid-Market,Asia,2025-07-24
+C-0141,Victor,SMB,North America,2025-08-23
+C-0142,Charlie,SMB,Asia,2024-08-03
+C-0143,Alice,SMB,North America,2025-06-16
+C-0144,Charlie,SMB,LATAM,2025-01-05
+C-0145,Eva,Enterprise,Europe,2023-11-19
+C-0146,Olivia,SMB,Europe,2023-08-06
+C-0147,Noah,SMB,LATAM,2024-11-02
+C-0148,Charlie,Mid-Market,North America,2024-05-26
+C-0149,Alice,Mid-Market,LATAM,2024-02-10
+C-0150,Eva,SMB,North America,2025-06-24
+C-0151,Zane,SMB,Europe,2025-07-25
+C-0152,Wendy,Enterprise,North America,2024-10-20
+C-0153,Noah,Mid-Market,Europe,2024-04-14
+C-0154,George,Mid-Market,North America,2023-05-27
+C-0155,Ivan,SMB,Asia,2023-09-29
+C-0156,Olivia,SMB,Asia,2023-05-23
+C-0157,Olivia,Enterprise,LATAM,2023-09-10
+C-0158,Zane,SMB,North America,2025-02-01
+C-0159,Julia,SMB,Europe,2024-07-28
+C-0160,Mia,SMB,Europe,2024-07-05
+C-0161,Sam,Mid-Market,North America,2023-09-27
+C-0162,George,SMB,North America,2025-02-03
+C-0163,Quinn,SMB,North America,2024-08-21
+C-0164,Tom,Mid-Market,Europe,2024-03-14
+C-0165,David,Mid-Market,Europe,2025-07-08
+C-0166,Eva,Mid-Market,Europe,2024-08-20
+C-0167,Wendy,Enterprise,North America,2024-02-13
+C-0168,George,SMB,North America,2024-01-06
+C-0169,Mia,Enterprise,North America,2023-08-13
+C-0170,Olivia,SMB,LATAM,2023-05-22
+C-0171,Kevin,SMB,North America,2024-06-05
+C-0172,David,SMB,North America,2024-05-20
+C-0173,Mia,SMB,North America,2023-04-04
+C-0174,George,SMB,Asia,2025-02-12
+C-0175,Sam,SMB,LATAM,2023-02-18
+C-0176,Victor,SMB,Asia,2025-05-31
+C-0177,Bob,SMB,Europe,2023-04-23
+C-0178,Julia,SMB,Europe,2023-06-06
+C-0179,Mia,Enterprise,North America,2024-10-04
+C-0180,Yara,SMB,LATAM,2023-06-13
+C-0181,Uma,SMB,Asia,2025-03-22
+C-0182,Fiona,SMB,Europe,2024-11-27
+C-0183,Liam,SMB,Asia,2024-03-08
+C-0184,Liam,Enterprise,Europe,2024-09-02
+C-0185,Tom,Enterprise,Europe,2023-03-07
+C-0186,Kevin,Mid-Market,LATAM,2024-01-30
+C-0187,Zane,SMB,LATAM,2024-01-26
+C-0188,Wendy,SMB,Europe,2024-09-02
+C-0189,Yara,Mid-Market,Europe,2024-04-24
+C-0190,George,Enterprise,North America,2024-06-25
+C-0191,Alice,Mid-Market,Europe,2023-09-15
+C-0192,Alice,SMB,North America,2025-09-21
+C-0193,Yara,SMB,Europe,2024-07-20
+C-0194,Yara,SMB,LATAM,2025-05-31
+C-0195,Tom,Mid-Market,Europe,2025-08-23
+C-0196,Mia,SMB,Europe,2023-01-12
+C-0197,Ivan,Mid-Market,North America,2024-11-27
+C-0198,Charlie,SMB,North America,2025-01-08
+C-0199,George,Mid-Market,Europe,2023-04-28
+C-0200,Fiona,SMB,North America,2024-11-29
+C-0201,Hannah,Mid-Market,North America,2025-06-25
+C-0202,Ivan,SMB,North America,2024-07-03
+C-0203,Eva,Enterprise,Asia,2025-02-07
+C-0204,Alice,Enterprise,Europe,2023-10-01
+C-0205,Sam,Enterprise,North America,2025-02-26
+C-0206,Julia,Enterprise,Europe,2024-10-18
+C-0207,Liam,Enterprise,Europe,2023-12-15
+C-0208,Xander,SMB,Europe,2023-04-25
+C-0209,Olivia,SMB,Europe,2023-10-28
+C-0210,Victor,Mid-Market,North America,2024-03-21
+C-0211,Xander,Mid-Market,Europe,2023-06-11
+C-0212,Ivan,SMB,Europe,2024-04-09
+C-0213,Tom,Mid-Market,Asia,2023-01-04
+C-0214,Quinn,Mid-Market,Europe,2025-09-03
+C-0215,Quinn,SMB,North America,2025-01-09
+C-0216,Zane,SMB,North America,2025-06-15
+C-0217,Tom,SMB,Europe,2025-01-06
+C-0218,Liam,SMB,Asia,2023-09-27
+C-0219,George,SMB,Europe,2025-09-22
+C-0220,Bob,SMB,Europe,2024-05-27
+C-0221,Charlie,Mid-Market,Europe,2025-02-19
+C-0222,Quinn,Mid-Market,Europe,2023-07-02
+C-0223,Eva,Enterprise,North America,2024-06-03
+C-0224,Quinn,SMB,Asia,2025-07-23
+C-0225,Xander,Enterprise,North America,2023-04-19
+C-0226,Quinn,SMB,Europe,2025-06-10
+C-0227,Quinn,SMB,LATAM,2024-10-02
+C-0228,Bob,Mid-Market,North America,2023-11-02
+C-0229,Bob,SMB,North America,2025-05-11
+C-0230,Victor,Mid-Market,North America,2024-10-16
+C-0231,Wendy,Mid-Market,LATAM,2024-06-03
+C-0232,Eva,Enterprise,North America,2024-09-15
+C-0233,Alice,Mid-Market,North America,2023-07-23
+C-0234,Alice,SMB,North America,2023-06-06
+C-0235,Sam,SMB,North America,2024-01-18
+C-0236,Bob,SMB,North America,2025-02-19
+C-0237,Uma,Mid-Market,Europe,2023-06-15
+C-0238,Liam,SMB,Europe,2024-07-06
+C-0239,Zane,Mid-Market,North America,2025-09-03
+C-0240,Fiona,Mid-Market,North America,2025-03-08
+C-0241,Wendy,SMB,North America,2025-08-02
+C-0242,David,Mid-Market,North America,2024-06-27
+C-0243,Wendy,SMB,Europe,2025-07-29
+C-0244,Kevin,SMB,Europe,2023-01-01
+C-0245,Xander,SMB,North America,2024-09-05
+C-0246,Quinn,Enterprise,Europe,2023-11-28
+C-0247,Fiona,Mid-Market,North America,2024-05-15
+C-0248,Xander,SMB,Asia,2023-01-20
+C-0249,Eva,SMB,Europe,2023-04-25
+C-0250,Tom,Mid-Market,Europe,2025-08-09
+C-0251,Bob,SMB,North America,2024-01-07
+C-0252,Fiona,SMB,LATAM,2025-06-18
+C-0253,Victor,SMB,North America,2025-05-01
+C-0254,Kevin,Mid-Market,North America,2025-04-06
+C-0255,Peter,SMB,North America,2023-11-11
+C-0256,Peter,Mid-Market,North America,2023-09-03
+C-0257,Alice,Mid-Market,LATAM,2023-03-01
+C-0258,Ivan,Enterprise,Asia,2023-09-04
+C-0259,Fiona,Enterprise,North America,2025-06-18
+C-0260,Peter,SMB,Europe,2024-08-03
+C-0261,Charlie,SMB,LATAM,2025-08-27
+C-0262,Tom,SMB,Asia,2023-03-22
+C-0263,David,SMB,Europe,2023-03-29
+C-0264,Sam,SMB,LATAM,2025-01-19
+C-0265,Zane,SMB,LATAM,2024-05-12
+C-0266,Charlie,SMB,Europe,2025-04-15
+C-0267,Sam,SMB,North America,2023-03-12
+C-0268,Tom,SMB,North America,2025-02-17
+C-0269,George,SMB,Asia,2024-06-29
+C-0270,Tom,SMB,North America,2025-02-23
+C-0271,Ivan,SMB,Asia,2023-05-09
+C-0272,Alice,SMB,North America,2023-05-12
+C-0273,Hannah,Mid-Market,North America,2024-11-06
+C-0274,George,SMB,North America,2024-05-01
+C-0275,Rachel,Mid-Market,North America,2025-08-27
+C-0276,Hannah,SMB,LATAM,2024-07-16
+C-0277,Alice,SMB,Asia,2023-06-19
+C-0278,Kevin,Mid-Market,Asia,2023-09-29
+C-0279,Yara,SMB,Europe,2024-06-24
+C-0280,Yara,SMB,North America,2025-06-12
+C-0281,Rachel,Enterprise,Europe,2024-09-13
+C-0282,Wendy,SMB,Europe,2024-03-09
+C-0283,Julia,SMB,Europe,2025-09-14
+C-0284,Charlie,SMB,North America,2023-08-05
+C-0285,George,Mid-Market,Europe,2025-08-09
+C-0286,Peter,Enterprise,Europe,2024-07-06
+C-0287,Zane,SMB,LATAM,2025-02-12
+C-0288,Peter,SMB,Asia,2025-01-17
+C-0289,Yara,Enterprise,Europe,2024-12-07
+C-0290,Tom,SMB,Europe,2023-07-25
+C-0291,Quinn,SMB,Europe,2024-12-31
+C-0292,Bob,SMB,North America,2023-11-16
+C-0293,Alice,SMB,Asia,2024-02-13
+C-0294,Peter,SMB,Asia,2024-11-18
+C-0295,Liam,Enterprise,Europe,2024-10-27
+C-0296,Eva,Mid-Market,North America,2024-01-18
+C-0297,Eva,Enterprise,North America,2024-03-24
+C-0298,Wendy,SMB,Europe,2025-07-10
+C-0299,Ivan,Mid-Market,North America,2024-06-13
+C-0300,Ivan,SMB,Asia,2024-04-07
+C-0301,Charlie,Mid-Market,North America,2023-05-04
+C-0302,Sam,SMB,North America,2023-09-11
+C-0303,Peter,Mid-Market,LATAM,2023-08-19
+C-0304,Peter,SMB,Europe,2023-03-07
+C-0305,Charlie,Mid-Market,North America,2023-12-13
+C-0306,Tom,Enterprise,North America,2023-01-22
+C-0307,Xander,Enterprise,North America,2024-08-25
+C-0308,Victor,Enterprise,Europe,2024-07-21
+C-0309,Xander,SMB,North America,2023-08-24
+C-0310,Alice,Mid-Market,Europe,2024-08-25
+C-0311,Xander,Mid-Market,LATAM,2023-08-14
+C-0312,Tom,Enterprise,North America,2023-01-08
+C-0313,Kevin,Mid-Market,Asia,2023-03-14
+C-0314,Quinn,SMB,LATAM,2024-12-25
+C-0315,Hannah,SMB,North America,2024-10-08
+C-0316,David,Enterprise,Asia,2023-03-02
+C-0317,Fiona,Mid-Market,Europe,2023-08-23
+C-0318,Hannah,SMB,LATAM,2023-03-11
+C-0319,Tom,SMB,Europe,2025-07-16
+C-0320,Charlie,Mid-Market,Europe,2023-02-02
+C-0321,Peter,Enterprise,Europe,2025-05-30
+C-0322,Yara,SMB,Asia,2023-12-05
+C-0323,Charlie,SMB,Europe,2023-03-14
+C-0324,Yara,SMB,Europe,2024-06-10
+C-0325,Rachel,SMB,Asia,2023-09-01
+C-0326,Noah,SMB,North America,2023-10-13
+C-0327,Rachel,SMB,North America,2024-11-16
+C-0328,Bob,SMB,North America,2024-05-12
+C-0329,Victor,SMB,North America,2023-08-08
+C-0330,Charlie,Mid-Market,North America,2024-07-06
+C-0331,Peter,SMB,LATAM,2023-05-16
+C-0332,Ivan,SMB,North America,2025-01-10
+C-0333,David,SMB,Europe,2025-08-15
+C-0334,Alice,SMB,North America,2025-06-22
+C-0335,David,SMB,Asia,2024-08-07
+C-0336,Alice,Mid-Market,LATAM,2024-08-13
+C-0337,Noah,SMB,Europe,2024-04-29
+C-0338,Uma,SMB,Asia,2023-09-06
+C-0339,Peter,SMB,North America,2025-03-14
+C-0340,Tom,SMB,Asia,2024-04-29
+C-0341,Xander,Mid-Market,North America,2025-04-06
+C-0342,Hannah,Enterprise,LATAM,2024-02-21
+C-0343,George,SMB,North America,2023-07-14
+C-0344,Charlie,SMB,Europe,2023-04-07
+C-0345,Quinn,SMB,Asia,2023-04-10
+C-0346,Alice,Mid-Market,North America,2024-11-05
+C-0347,Peter,Enterprise,North America,2024-03-17
+C-0348,Liam,Mid-Market,North America,2023-12-29
+C-0349,Sam,Enterprise,North America,2024-03-09
+C-0350,Victor,Mid-Market,Europe,2024-02-25
+C-0351,Wendy,Enterprise,North America,2024-04-23
+C-0352,Victor,Enterprise,North America,2025-06-03
+C-0353,Noah,SMB,North America,2025-01-16
+C-0354,Fiona,Mid-Market,Asia,2023-02-25
+C-0355,Fiona,Mid-Market,North America,2024-11-20
+C-0356,Mia,SMB,North America,2024-10-31
+C-0357,Sam,Mid-Market,North America,2024-10-23
+C-0358,Victor,Enterprise,North America,2023-04-11
+C-0359,Hannah,Mid-Market,Asia,2023-03-04
+C-0360,Bob,SMB,North America,2024-02-17
+C-0361,Uma,Mid-Market,North America,2025-01-15
+C-0362,Alice,Mid-Market,Asia,2023-12-14
+C-0363,Olivia,Mid-Market,Asia,2025-03-30
+C-0364,Alice,SMB,North America,2025-06-01
+C-0365,Eva,SMB,Asia,2023-04-22
+C-0366,Peter,Mid-Market,LATAM,2023-09-12
+C-0367,Sam,SMB,North America,2023-07-16
+C-0368,David,Mid-Market,Asia,2023-07-14
+C-0369,Charlie,Mid-Market,Europe,2024-07-03
+C-0370,Quinn,SMB,Europe,2024-04-04
+C-0371,Quinn,Mid-Market,North America,2023-05-24
+C-0372,Liam,SMB,North America,2024-03-08
+C-0373,Noah,Mid-Market,Asia,2023-07-07
+C-0374,Uma,Mid-Market,LATAM,2023-10-13
+C-0375,Fiona,Enterprise,Europe,2024-04-18
+C-0376,Charlie,SMB,North America,2023-09-13
+C-0377,Ivan,Mid-Market,Europe,2025-06-14
+C-0378,Eva,SMB,Europe,2025-08-03
+C-0379,Xander,SMB,North America,2023-03-19
+C-0380,Quinn,SMB,North America,2024-03-29
+C-0381,Noah,SMB,Asia,2025-04-07
+C-0382,Uma,SMB,North America,2025-06-01
+C-0383,Charlie,SMB,Asia,2025-05-26
+C-0384,Alice,SMB,North America,2024-07-17
+C-0385,Tom,SMB,North America,2023-04-11
+C-0386,Uma,Enterprise,North America,2023-02-21
+C-0387,Wendy,Enterprise,Europe,2024-10-29
+C-0388,Alice,Enterprise,LATAM,2024-07-07
+C-0389,Charlie,Enterprise,North America,2025-05-06
+C-0390,Rachel,SMB,Asia,2023-01-16
+C-0391,Yara,SMB,Europe,2025-09-19
+C-0392,Julia,Mid-Market,Asia,2023-04-06
+C-0393,Victor,Enterprise,North America,2025-08-06
+C-0394,Zane,Mid-Market,Asia,2025-02-10
+C-0395,Charlie,Mid-Market,Asia,2025-05-19
+C-0396,Hannah,SMB,North America,2023-08-31
+C-0397,Noah,Mid-Market,North America,2023-06-20
+C-0398,Xander,Mid-Market,Asia,2024-02-21
+C-0399,Rachel,SMB,LATAM,2024-05-12
+C-0400,Olivia,SMB,North America,2024-05-07
+C-0401,Victor,Mid-Market,Europe,2023-08-07
+C-0402,Wendy,Mid-Market,LATAM,2025-06-04
+C-0403,Bob,Enterprise,Asia,2024-02-15
+C-0404,Julia,Mid-Market,LATAM,2025-07-13
+C-0405,Bob,Mid-Market,Asia,2023-03-02
+C-0406,Zane,Mid-Market,North America,2023-06-18
+C-0407,Quinn,Mid-Market,North America,2024-01-24
+C-0408,Hannah,Mid-Market,North America,2023-01-03
+C-0409,Alice,SMB,Europe,2024-02-04
+C-0410,Ivan,SMB,Europe,2023-09-29
+C-0411,Kevin,SMB,North America,2025-08-06
+C-0412,Victor,Mid-Market,Asia,2025-03-13
+C-0413,Peter,SMB,Europe,2025-03-14
+C-0414,George,SMB,Europe,2024-04-10
+C-0415,Julia,SMB,Europe,2023-10-20
+C-0416,Wendy,SMB,Europe,2024-03-09
+C-0417,Zane,Mid-Market,North America,2024-12-14
+C-0418,Charlie,Mid-Market,North America,2025-09-07
+C-0419,Rachel,SMB,North America,2025-01-18
+C-0420,Yara,SMB,North America,2025-03-13
+C-0421,Xander,SMB,Europe,2024-07-23
+C-0422,Mia,SMB,Europe,2024-11-08
+C-0423,Zane,SMB,North America,2025-01-05
+C-0424,George,SMB,Asia,2024-05-13
+C-0425,Yara,SMB,North America,2023-06-08
+C-0426,David,Enterprise,LATAM,2023-07-14
+C-0427,Mia,SMB,LATAM,2023-10-31
+C-0428,Tom,SMB,North America,2023-08-11
+C-0429,Alice,SMB,Europe,2025-09-18
+C-0430,Hannah,SMB,North America,2023-03-01
+C-0431,Noah,Mid-Market,Europe,2024-08-16
+C-0432,Peter,SMB,Europe,2025-01-23
+C-0433,Noah,SMB,North America,2024-07-09
+C-0434,Liam,Mid-Market,Europe,2023-03-04
+C-0435,Sam,SMB,North America,2025-02-04
+C-0436,Wendy,Mid-Market,North America,2023-11-18
+C-0437,Olivia,SMB,Europe,2023-02-28
+C-0438,Bob,Mid-Market,North America,2023-02-21
+C-0439,Bob,Mid-Market,Europe,2024-08-21
+C-0440,Wendy,Mid-Market,North America,2024-05-03
+C-0441,Victor,Mid-Market,LATAM,2024-05-29
+C-0442,Sam,Enterprise,North America,2025-07-30
+C-0443,Yara,SMB,Europe,2025-05-23
+C-0444,Zane,Mid-Market,Europe,2024-06-27
+C-0445,Victor,SMB,North America,2023-06-11
+C-0446,Zane,Mid-Market,LATAM,2023-02-28
+C-0447,Zane,Enterprise,Europe,2025-09-10
+C-0448,Victor,SMB,Europe,2024-06-04
+C-0449,Quinn,SMB,Asia,2023-03-24
+C-0450,Tom,SMB,LATAM,2025-05-21
+C-0451,Julia,SMB,LATAM,2023-07-10
+C-0452,Fiona,SMB,Europe,2023-03-12
+C-0453,Olivia,SMB,Europe,2024-09-01
+C-0454,Victor,SMB,North America,2023-03-11
+C-0455,Kevin,SMB,North America,2024-11-22
+C-0456,Eva,Mid-Market,Europe,2025-06-01
+C-0457,Alice,Enterprise,North America,2023-08-29
+C-0458,Hannah,SMB,Europe,2024-02-18
+C-0459,Uma,SMB,North America,2023-05-03
+C-0460,Liam,Mid-Market,North America,2025-08-22
+C-0461,Liam,SMB,Asia,2025-06-30
+C-0462,Eva,Mid-Market,LATAM,2024-08-06
+C-0463,George,Mid-Market,North America,2023-09-10
+C-0464,David,SMB,Europe,2024-08-15
+C-0465,Fiona,SMB,Asia,2024-08-31
+C-0466,Mia,SMB,North America,2023-02-10
+C-0467,Tom,SMB,Asia,2024-09-26
+C-0468,Olivia,SMB,North America,2023-03-25
+C-0469,Charlie,Mid-Market,North America,2024-03-05
+C-0470,Wendy,Enterprise,LATAM,2024-11-04
+C-0471,Hannah,Enterprise,North America,2024-08-20
+C-0472,Tom,SMB,Europe,2024-08-01
+C-0473,Peter,Mid-Market,Asia,2024-06-19
+C-0474,Mia,SMB,North America,2023-11-20
+C-0475,Rachel,Enterprise,Europe,2025-08-15
+C-0476,Julia,Mid-Market,LATAM,2023-09-25
+C-0477,Sam,Mid-Market,North America,2023-07-29
+C-0478,Quinn,Enterprise,Asia,2024-11-16
+C-0479,Xander,SMB,Europe,2025-01-03
+C-0480,Sam,Mid-Market,Europe,2023-11-18
+C-0481,Zane,SMB,Europe,2023-09-02
+C-0482,Wendy,Enterprise,North America,2023-09-29
+C-0483,Zane,Enterprise,LATAM,2024-02-10
+C-0484,Eva,Enterprise,LATAM,2023-05-15
+C-0485,Zane,Mid-Market,Europe,2024-11-18
+C-0486,Uma,Mid-Market,Asia,2024-10-22
+C-0487,Wendy,Enterprise,Europe,2023-11-04
+C-0488,Ivan,SMB,Europe,2024-04-13
+C-0489,Liam,SMB,Europe,2023-11-20
+C-0490,Uma,SMB,Europe,2025-08-09
+C-0491,Alice,Mid-Market,Europe,2025-02-08
+C-0492,Zane,SMB,Asia,2025-08-16
+C-0493,Zane,SMB,Europe,2023-03-16
+C-0494,Alice,SMB,North America,2023-01-10
+C-0495,Olivia,SMB,North America,2024-04-14
+C-0496,Bob,SMB,North America,2024-09-28
+C-0497,Victor,Mid-Market,Europe,2024-07-30
+C-0498,Peter,SMB,Europe,2023-04-13
+C-0499,Yara,Mid-Market,Europe,2023-03-17
+C-0500,Hannah,SMB,Europe,2024-07-04

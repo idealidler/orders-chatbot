@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# dbt
+orders_chatbot/target/
+orders_chatbot/dbt_packages/
+orders_chatbot/logs/
+orders_chatbot/.user.yml
+logs/
+
+# DuckDB database files
+*.duckdb
+*.duckdb.wal
+
+# macOS
+.DS_Store
