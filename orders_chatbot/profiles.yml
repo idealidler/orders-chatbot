@@ -1,0 +1,8 @@
+orders_chatbot:
+  target: prod
+  outputs:
+    prod:
+      type: duckdb
+      path: "../orders_chatbot.duckdb"
+      schema: main
+      threads: 4

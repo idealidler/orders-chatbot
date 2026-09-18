@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: orders-chatbot-backend
+    runtime: python
+    plan: free
+    buildCommand: >
+      pip install -r backend/requirements.txt &&
+      cd orders_chatbot &&
+      DBT_PROFILES_DIR=. dbt deps &&
+      DBT_PROFILES_DIR=. dbt seed --target prod &&
+      DBT_PROFILES_DIR=. dbt run --target prod &&
+      DBT_PROFILES_DIR=. dbt docs generate --target prod
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
