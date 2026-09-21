@@ -65,7 +65,7 @@ function AssistantBubble({
   return (
     <div className="space-y-3">
       {!showingTable && (
-        <div className="prose prose-sm max-w-none text-gray-800">
+        <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm leading-relaxed text-gray-800 shadow-sm">
           <ReactMarkdown>{result.answer}</ReactMarkdown>
         </div>
       )}
