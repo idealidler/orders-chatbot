@@ -2,6 +2,7 @@
 strictly in the obt_orders schema. The LLM is instructed to refuse rather
 than guess when a question cannot be answered from the available columns."""
 import os
+import json
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -36,7 +37,10 @@ Instead, respond with exactly:
 COUNT(DISTINCT order_id) or SUM of the is_first_item_in_order flag, since \
 the table is at order-item grain.
 - Date rules:
-  - Use order_date for order and revenue time analysis.
+  - `order_date` is the only date column to use for analytics. Treat every
+    year, month, date, period, time trend, or date-range reference as a
+    reference to `order_date`, including phrases such as "for the year 2026",
+    "in 2025", and "last year".
   - For a specific year YYYY, filter from DATE 'YYYY-01-01' inclusive to
     DATE 'YYYY+1-01-01' exclusive, replacing YYYY+1 with the next calendar year.
   - For year-over-year analysis, use EXTRACT(YEAR FROM order_date).
@@ -69,3 +73,40 @@ def generate_sql(question: str) -> str:
     )
 
     return response.choices[0].message.content.strip()
+
+
+def generate_natural_language_answer(
+    question: str, sql: str, rows: list[dict]
+) -> tuple[str, str]:
+    """Explain verified results and recommend summary or table presentation."""
+    prompt = f"""You are an analytics answer writer.
+Answer the user's question using only the verified SQL result below.
+Return a JSON object with exactly these keys:
+{{"answer": "concise Markdown answer", "preferred_view": "summary"}}
+Use `summary` for a single metric or direct fact. Use `table` for rankings,
+breakdowns, lists, comparisons, or multiple rows where the table is the clearest
+primary answer. The answer should still be a concise Markdown explanation.
+For a single metric, state the metric, value, and relevant time period naturally.
+Use **bold** for the key answer. If there are no rows, clearly say that no
+matching records were found. Never invent, estimate, or recompute values.
+
+Question: {question}
+SQL: {sql}
+Result rows (first 50 rows): {json.dumps(rows[:50], default=str)}
+"""
+    response = _client().chat.completions.create(
+        model=MODEL,
+        temperature=0,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    raw = response.choices[0].message.content.strip()
+    try:
+        result = json.loads(raw)
+        answer = str(result["answer"]).strip()
+        preferred_view = result.get("preferred_view", "summary")
+        if preferred_view not in {"summary", "table"}:
+            preferred_view = "summary"
+        return answer, preferred_view
+    except (ValueError, KeyError, TypeError):
+        # Preserve a useful answer if a model response is not valid JSON.
+        return raw, "summary"

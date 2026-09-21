@@ -1,5 +1,11 @@
 export type QueryResponse =
-  | { status: "ok"; sql: string; rows: Record<string, unknown>[] }
+  | {
+      status: "ok";
+      answer: string;
+      preferred_view: "summary" | "table";
+      sql: string;
+      rows: Record<string, unknown>[];
+    }
   | { status: "cannot_answer"; reason: string };
 
 export class QueryError extends Error {}

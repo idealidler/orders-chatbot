@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from .db import run_query
-from .llm import generate_sql
+from .llm import generate_natural_language_answer, generate_sql
 from .sql_guard import UnsafeSQLError, validate_select_only
 
 logging.basicConfig(level=logging.INFO)
@@ -66,4 +66,13 @@ def query(request: QuestionRequest):
             detail="Something went wrong running your query. Please try again.",
         )
 
-    return {"status": "ok", "sql": safe_sql, "rows": rows}
+    answer, preferred_view = generate_natural_language_answer(
+        request.question, safe_sql, rows
+    )
+    return {
+        "status": "ok",
+        "answer": answer,
+        "preferred_view": preferred_view,
+        "sql": safe_sql,
+        "rows": rows,
+    }
