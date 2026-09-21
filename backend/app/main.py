@@ -66,9 +66,14 @@ def query(request: QuestionRequest):
             detail="Something went wrong running your query. Please try again.",
         )
 
-    answer, preferred_view = generate_natural_language_answer(
-        request.question, safe_sql, rows
-    )
+    try:
+        answer, preferred_view = generate_natural_language_answer(
+            request.question, safe_sql, rows
+        )
+    except Exception:
+        logger.exception("Unable to generate natural-language answer")
+        answer = "The query completed successfully. See the table view for the results."
+        preferred_view = "table"
     return {
         "status": "ok",
         "answer": answer,

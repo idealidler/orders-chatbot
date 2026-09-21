@@ -97,16 +97,29 @@ Result rows (first 50 rows): {json.dumps(rows[:50], default=str)}
     response = _client().chat.completions.create(
         model=MODEL,
         temperature=0,
+        response_format={"type": "json_object"},
         messages=[{"role": "user", "content": prompt}],
     )
     raw = response.choices[0].message.content.strip()
     try:
         result = json.loads(raw)
         answer = str(result["answer"]).strip()
+        if not answer:
+            raise ValueError("The answer was empty")
         preferred_view = result.get("preferred_view", "summary")
         if preferred_view not in {"summary", "table"}:
             preferred_view = "summary"
         return answer, preferred_view
-    except (ValueError, KeyError, TypeError):
-        # Preserve a useful answer if a model response is not valid JSON.
-        return raw, "summary"
+    except (ValueError, KeyError, TypeError, json.JSONDecodeError):
+        return _fallback_answer(rows), "summary"
+
+
+def _fallback_answer(rows: list[dict]) -> str:
+    """Guarantee a useful answer even if the explanation call fails."""
+    if not rows:
+        return "**No matching records were found.**"
+    if len(rows) == 1:
+        values = list(rows[0].items())
+        details = ", ".join(f"**{key}:** {value}" for key, value in values)
+        return f"The query returned **1 result**: {details}."
+    return f"The query returned **{len(rows):,} results**. See the table view for the details."
