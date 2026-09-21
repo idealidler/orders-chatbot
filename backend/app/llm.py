@@ -29,9 +29,18 @@ obt_orders (for example, it asks about data that isn't present, like cost, \
 profit margin, or supplier information), do not guess or approximate. \
 Instead, respond with exactly:
   CANNOT_ANSWER: <brief reason, e.g. which data is missing>
+- Do not use CANNOT_ANSWER merely because a requested date or year may have no
+  rows. Generate valid SQL and let the database determine whether it returns
+  data.
 - When counting orders, never use COUNT(*) directly on obt_orders. Use \
 COUNT(DISTINCT order_id) or SUM of the is_first_item_in_order flag, since \
 the table is at order-item grain.
+- Date rules:
+  - Use order_date for order and revenue time analysis.
+  - For a specific year YYYY, filter from DATE 'YYYY-01-01' inclusive to
+    DATE 'YYYY+1-01-01' exclusive, replacing YYYY+1 with the next calendar year.
+  - For year-over-year analysis, use EXTRACT(YEAR FROM order_date).
+  - Do not claim that a year has no data before executing the query.
 - Return only the raw SQL (or the CANNOT_ANSWER line) with no markdown code \
 fences and no explanation.
 """
