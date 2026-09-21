@@ -102,7 +102,12 @@ Result rows (first 50 rows): {json.dumps(rows[:50], default=str)}
     )
     raw = response.choices[0].message.content.strip()
     try:
-        result = json.loads(raw)
+        # Be defensive if a provider wraps otherwise-valid JSON in Markdown.
+        json_text = raw
+        if json_text.startswith("```"):
+            json_text = json_text.removeprefix("```json").removeprefix("```")
+            json_text = json_text.removesuffix("```").strip()
+        result = json.loads(json_text)
         answer = str(result["answer"]).strip()
         if not answer:
             raise ValueError("The answer was empty")
