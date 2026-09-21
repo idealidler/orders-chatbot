@@ -1,9 +1,10 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { askQuestion, QueryError, type QueryResponse } from "./api";
 
 type ChatMessage =
   | { role: "user"; text: string }
-  | { role: "assistant"; result: QueryResponse }
+  | { role: "assistant"; result: Extract<QueryResponse, { status: "ok" }>; view: "summary" | "table" }
   | { role: "assistant-error"; text: string };
 
 const examples = [
@@ -51,25 +52,39 @@ function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
   );
 }
 
-function AssistantBubble({ result }: { result: QueryResponse }) {
-  if (result.status === "cannot_answer") {
-    return (
-      <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-        <p className="font-medium">I can’t answer that from this dataset.</p>
-        <p className="mt-1 text-amber-800">{result.reason}</p>
-      </div>
-    );
-  }
+function AssistantBubble({
+  result,
+  view,
+  onToggleView,
+}: {
+  result: Extract<QueryResponse, { status: "ok" }>;
+  view: "summary" | "table";
+  onToggleView: () => void;
+}) {
+  const showingTable = view === "table";
   return (
-    <div className="space-y-2">
-      <div className="mb-2 text-xs text-gray-500">{result.rows.length.toLocaleString()} {result.rows.length === 1 ? "result" : "results"}</div>
-      <ResultTable rows={result.rows} />
-      <details className="text-xs text-gray-500">
-        <summary className="cursor-pointer select-none">Show generated SQL</summary>
-        <pre className="mt-1 whitespace-pre-wrap rounded bg-gray-900 p-3 text-gray-100">
-          {result.sql}
-        </pre>
-      </details>
+    <div className="space-y-3">
+      {!showingTable && (
+        <div className="prose prose-sm max-w-none text-gray-800">
+          <ReactMarkdown>{result.answer}</ReactMarkdown>
+        </div>
+      )}
+      {showingTable && (
+        <>
+          <div className="mb-2 text-xs text-gray-500">{result.rows.length.toLocaleString()} {result.rows.length === 1 ? "result" : "results"}</div>
+          <ResultTable rows={result.rows} />
+        </>
+      )}
+      <div className="flex items-center gap-3 text-xs">
+        <button type="button" onClick={onToggleView} className="font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 hover:text-gray-950">
+          {showingTable ? "See natural answer" : "See table view"}
+        </button>
+        <span className="text-gray-400">·</span>
+        <details className="text-gray-500">
+          <summary className="cursor-pointer select-none hover:text-gray-800">Show generated SQL</summary>
+          <pre className="mt-2 whitespace-pre-wrap rounded-lg bg-gray-900 p-3 text-left text-gray-100">{result.sql}</pre>
+        </details>
+      </div>
     </div>
   );
 }
@@ -94,7 +109,11 @@ function App() {
 
     try {
       const result = await askQuestion(trimmed);
-      setMessages((prev) => [...prev, { role: "assistant", result }]);
+      if (result.status === "cannot_answer") {
+        setMessages((prev) => [...prev, { role: "assistant-error", text: result.reason }]);
+      } else {
+        setMessages((prev) => [...prev, { role: "assistant", result, view: result.preferred_view }]);
+      }
     } catch (err) {
       const text = err instanceof QueryError ? err.message : "Network error. Please try again.";
       setMessages((prev) => [...prev, { role: "assistant-error", text }]);
@@ -154,11 +173,7 @@ function App() {
               </div>
             );
           }
-          return (
-            <div key={i}>
-              <AssistantBubble result={msg.result} />
-            </div>
-          );
+          return <div key={i}><AssistantBubble result={msg.result} view={msg.view} onToggleView={() => setMessages((prev) => prev.map((item, index) => index === i && item.role === "assistant" ? { ...item, view: item.view === "summary" ? "table" : "summary" } : item))} /></div>;
         })}
         {loading && <div className="flex items-center gap-2 text-sm text-gray-500"><span className="h-2 w-2 animate-pulse rounded-full bg-gray-400" /> Thinking…</div>}
       </main>
