@@ -59,6 +59,19 @@ npm install
 npm run dev
 ```
 
+## Deploying
+
+Deploy `frontend` as a Vercel project and set this build-time environment variable:
+
+```text
+VITE_API_BASE=https://<your-render-service>.onrender.com
+```
+
+In Render, set `OPENAI_API_KEY` and set `CORS_ORIGINS` to the exact Vercel URL,
+for example `https://<your-project>.vercel.app` (include additional comma-separated
+origins if you use a custom domain). Redeploy both services after changing these
+variables. Verify the backend at `https://<your-render-service>.onrender.com/health`.
+
 ## Status
 
 - [x] Environment setup (dbt-duckdb + DuckDB)
