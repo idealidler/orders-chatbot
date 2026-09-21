@@ -4,9 +4,17 @@ export type QueryResponse =
 
 export class QueryError extends Error {}
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+// VITE_API_BASE is injected by Vercel at build time. Keep localhost only for
+// local Vite development; using it in a deployed build makes the browser call
+// the visitor's own computer.
+const configuredApiBase = import.meta.env.VITE_API_BASE?.trim();
+const API_BASE = configuredApiBase || (import.meta.env.DEV ? "http://127.0.0.1:8000" : "");
 
 export async function askQuestion(question: string): Promise<QueryResponse> {
+  if (!API_BASE) {
+    throw new QueryError("Backend URL is not configured. Set VITE_API_BASE in Vercel and redeploy.");
+  }
+
   const res = await fetch(`${API_BASE}/query`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

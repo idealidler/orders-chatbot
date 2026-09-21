@@ -19,7 +19,11 @@ app = FastAPI(title="Orders Chatbot API")
 # Comma-separated list of allowed frontend origins, e.g.
 # "http://localhost:5173,https://orders-chatbot.vercel.app"
 _default_origins = "http://localhost:5173"
-allowed_origins = os.environ.get("CORS_ORIGINS", _default_origins).split(",")
+allowed_origins = [
+    origin.strip()
+    for origin in os.environ.get("CORS_ORIGINS", _default_origins).split(",")
+    if origin.strip()
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +31,11 @@ app.add_middleware(
     allow_methods=["POST"],
     allow_headers=["*"],
 )
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 
 class QuestionRequest(BaseModel):
