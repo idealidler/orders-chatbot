@@ -13,9 +13,32 @@ const examples = [
   "Top 5 categories by revenue",
 ];
 
-function formatValue(value: unknown) {
+function formatColumnName(column: string) {
+  return column
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
+    .replace(/\bId\b/g, "ID")
+    .replace(/\bSk\b/g, "SK");
+}
+
+function formatValue(value: unknown, column: string) {
   if (value === null || value === undefined) return "—";
-  if (typeof value === "number") return value.toLocaleString();
+  if (typeof value === "number") {
+    return value.toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+    });
+  }
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (column.endsWith("_date") && typeof value === "string") {
+    const date = new Date(`${value}T00:00:00`);
+    if (!Number.isNaN(date.getTime())) {
+      return date.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    }
+  }
   return String(value);
 }
 
@@ -25,23 +48,23 @@ function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
   }
   const columns = Object.keys(rows[0]);
   return (
-    <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-      <table className="min-w-full text-sm">
-        <thead className="bg-slate-50">
+    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+      <table className="min-w-full border-collapse text-sm">
+        <thead className="bg-slate-100">
           <tr>
             {columns.map((col) => (
-              <th key={col} className="whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
-                {col}
+              <th key={col} scope="col" className="whitespace-nowrap border-b border-slate-200 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600">
+                {formatColumnName(col)}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100">
+        <tbody>
           {rows.map((row, i) => (
-            <tr key={i}>
+            <tr key={i} className="border-b border-slate-100 even:bg-slate-50/70 hover:bg-blue-50/60">
               {columns.map((col) => (
-              <td key={col} className="whitespace-nowrap px-4 py-2.5 text-gray-800">
-                  {formatValue(row[col])}
+              <td key={col} className="whitespace-nowrap border-r border-slate-100 px-4 py-3 text-slate-700 last:border-r-0">
+                  {formatValue(row[col], col)}
                 </td>
               ))}
             </tr>
@@ -65,7 +88,7 @@ function AssistantBubble({
   return (
     <div className="space-y-3">
       {!showingTable && (
-        <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm leading-relaxed text-gray-800 shadow-sm">
+        <div className="text-sm leading-relaxed text-gray-800">
           <ReactMarkdown>{result.answer}</ReactMarkdown>
         </div>
       )}
@@ -75,16 +98,18 @@ function AssistantBubble({
           <ResultTable rows={result.rows} />
         </>
       )}
-      <div className="flex items-center gap-3 text-xs">
-        <button type="button" onClick={onToggleView} className="font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 hover:text-gray-950">
-          {showingTable ? "See natural answer" : "See table view"}
-        </button>
-        <span className="text-gray-400">·</span>
-        <details className="text-gray-500">
-          <summary className="cursor-pointer select-none hover:text-gray-800">Show generated SQL</summary>
-          <pre className="mt-2 whitespace-pre-wrap rounded-lg bg-gray-900 p-3 text-left text-gray-100">{result.sql}</pre>
-        </details>
-      </div>
+      <details className="pt-1 text-xs text-gray-400">
+        <summary className="w-fit cursor-pointer select-none font-mono hover:text-gray-700">[Options]</summary>
+        <div className="mt-3 space-y-3 border-l border-gray-200 pl-3">
+          <button type="button" onClick={onToggleView} className="block font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 hover:text-gray-950">
+            {showingTable ? "See natural answer" : "See table view"}
+          </button>
+          <details className="text-gray-500">
+            <summary className="w-fit cursor-pointer select-none hover:text-gray-800">Show generated SQL</summary>
+            <pre className="mt-2 whitespace-pre-wrap rounded-lg bg-gray-900 p-3 text-left text-gray-100">{result.sql}</pre>
+          </details>
+        </div>
+      </details>
     </div>
   );
 }
@@ -123,8 +148,8 @@ function App() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-4xl flex-col bg-white shadow-sm">
-      <header className="border-b border-gray-200 bg-white px-5 py-5 sm:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col bg-white">
+      <header className="border-b border-gray-200 bg-white px-5 py-5 sm:px-7">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="mb-1 flex items-center gap-2">
@@ -142,7 +167,7 @@ function App() {
         </div>
       </header>
 
-      <main className="flex-1 space-y-5 overflow-y-auto bg-slate-50/60 px-5 py-6 sm:px-8">
+      <main className="flex-1 space-y-8 overflow-y-auto bg-white px-5 py-8 sm:px-7">
         {messages.length === 0 && (
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-medium text-gray-900">What would you like to know?</p>
@@ -159,40 +184,53 @@ function App() {
         {messages.map((msg, i) => {
           if (msg.role === "user") {
             return (
-              <div key={i} className="flex justify-end">
-                <div className="max-w-[85%] rounded-2xl rounded-br-md bg-gray-900 px-4 py-3 text-sm leading-relaxed text-white shadow-sm">
-                  {msg.text}
-                </div>
+              <div key={i} className="max-w-[85%] text-sm leading-relaxed text-gray-900">
+                <div className="mb-2 font-mono text-[11px] font-semibold tracking-widest text-gray-400">[YOU]</div>
+                <div>{msg.text}</div>
               </div>
             );
           }
           if (msg.role === "assistant-error") {
             return (
-              <div key={i} className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                {msg.text}
+              <div key={i} className="text-sm leading-relaxed text-red-700">
+                <div className="mb-2 font-mono text-[11px] font-semibold tracking-widest text-red-400">[AI]</div>
+                <div>{msg.text}</div>
               </div>
             );
           }
-          return <div key={i}><AssistantBubble result={msg.result} view={msg.view} onToggleView={() => setMessages((prev) => prev.map((item, index) => index === i && item.role === "assistant" ? { ...item, view: item.view === "summary" ? "table" : "summary" } : item))} /></div>;
+          return <div key={i}>
+            <div className="mb-2 font-mono text-[11px] font-semibold tracking-widest text-gray-400">[AI]</div>
+            <AssistantBubble result={msg.result} view={msg.view} onToggleView={() => setMessages((prev) => prev.map((item, index) => index === i && item.role === "assistant" ? { ...item, view: item.view === "summary" ? "table" : "summary" } : item))} />
+          </div>;
         })}
-        {loading && <div className="flex items-center gap-2 text-sm text-gray-500"><span className="h-2 w-2 animate-pulse rounded-full bg-gray-400" /> Thinking…</div>}
+        {loading && <div className="text-sm text-gray-500"><div className="mb-2 font-mono text-[11px] font-semibold tracking-widest text-gray-400">[AI]</div><div>Thinking…</div></div>}
       </main>
 
-      <form onSubmit={handleSubmit} className="flex gap-2 border-t border-gray-200 bg-white px-5 py-4 sm:px-8">
-        <input
-          type="text"
+      <form onSubmit={handleSubmit} className="flex items-end gap-4 border-t border-gray-200 bg-white px-5 py-4 sm:px-7">
+        <textarea
           value={question}
-          onChange={(e) => setQuestion(e.target.value)}
+          rows={1}
+          onChange={(e) => {
+            setQuestion(e.target.value);
+            e.currentTarget.style.height = "auto";
+            e.currentTarget.style.height = `${Math.min(e.currentTarget.scrollHeight, 160)}px`;
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              e.currentTarget.form?.requestSubmit();
+            }
+          }}
           placeholder="Ask a question about your orders…"
           aria-label="Question about your orders"
-          className="min-w-0 flex-1 rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+          className="min-w-0 flex-1 resize-none overflow-y-auto border-0 bg-transparent px-0 py-2 text-sm leading-6 text-gray-900 outline-none placeholder:text-gray-400 focus:ring-0"
         />
         <button
           type="submit"
-          disabled={loading}
-          className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={loading || !question.trim()}
+          className={`pb-2 text-sm font-medium transition-colors ${question.trim() && !loading ? "text-gray-950 hover:text-gray-600" : "cursor-not-allowed text-gray-400"}`}
         >
-          Ask
+          Send
         </button>
       </form>
     </div>
