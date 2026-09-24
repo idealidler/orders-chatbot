@@ -15,3 +15,14 @@ body,
   margin: 0;
   background: #ffffff;
 }
+
+button,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 3px;
+}

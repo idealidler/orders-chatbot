@@ -94,12 +94,12 @@ function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
         <span>{rows.length.toLocaleString()} results</span>
         <button type="button" onClick={exportCsv} className="font-medium text-gray-700 underline underline-offset-4 hover:text-gray-950">Export CSV</button>
       </div>
-    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
       <table className="min-w-full border-collapse text-sm">
-        <thead className="sticky top-0 bg-slate-100">
+        <thead className="sticky top-0 bg-slate-100 dark:bg-slate-800">
           <tr>
             {columns.map((col) => (
-              <th key={col} scope="col" className="whitespace-nowrap border-b border-slate-200 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600">
+              <th key={col} scope="col" className="whitespace-nowrap border-b border-slate-200 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-700 dark:border-slate-700 dark:text-slate-200">
                 <button type="button" onClick={() => toggleSort(col)} className="focus:outline-none focus:ring-2 focus:ring-emerald-600">{formatColumnName(col)} {sort?.column === col ? (sort.direction === "asc" ? "↑" : "↓") : "↕"}</button>
               </th>
             ))}
@@ -107,9 +107,9 @@ function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
         </thead>
         <tbody>
           {visibleRows.map((row, i) => (
-            <tr key={i} className="border-b border-slate-100 even:bg-slate-50/70 hover:bg-blue-50/60">
+            <tr key={i} className="border-b border-slate-100 even:bg-slate-50/70 hover:bg-blue-50/60 dark:border-slate-800 dark:even:bg-slate-800/60 dark:hover:bg-slate-700">
               {columns.map((col) => (
-              <td key={col} className="whitespace-nowrap border-r border-slate-100 px-4 py-3 text-slate-700 last:border-r-0">
+              <td key={col} className="whitespace-nowrap border-r border-slate-100 px-4 py-3 text-slate-700 last:border-r-0 dark:border-slate-800 dark:text-slate-200">
                   {formatValue(row[col], col)}
                 </td>
               ))}
@@ -127,7 +127,7 @@ function KpiCard({ rows }: { rows: Record<string, unknown>[] }) {
   const row = rows[0];
   if (!row) return <p className="text-sm text-gray-500">No matching records were found.</p>;
   const [label, value] = Object.entries(row)[0] ?? ["Result", "—"];
-  return <div className="border border-emerald-200 bg-emerald-50/40 p-5"><p className="text-sm font-medium text-gray-600">{formatColumnName(label)}</p><p className="mt-2 text-3xl font-semibold tracking-tight text-gray-950">{formatValue(value, label)}</p><p className="mt-2 text-sm text-gray-500">Verified from the orders warehouse</p></div>;
+  return <div className="border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-800 dark:bg-emerald-950/40"><p className="text-sm font-medium text-gray-700 dark:text-slate-300">{formatColumnName(label)}</p><p className="mt-2 text-3xl font-semibold tracking-tight text-gray-950 dark:text-white">{formatValue(value, label)}</p><p className="mt-2 text-sm text-gray-600 dark:text-slate-400">Verified from the orders warehouse</p></div>;
 }
 
 function ResultChart({ rows }: { rows: Record<string, unknown>[] }) {
@@ -196,7 +196,6 @@ function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [showSchema, setShowSchema] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState<string[]>(() => JSON.parse(localStorage.getItem("orders-chat-history") || "[]"));
@@ -243,35 +242,34 @@ function App() {
   function regenerate(questionText: string) { setQuestion(questionText); window.setTimeout(() => document.querySelector<HTMLFormElement>("#ask form")?.requestSubmit(), 0); }
 
   return (
-    <div className={darkMode ? "dark" : ""}>
-    <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col bg-white text-gray-900 dark:bg-slate-950 dark:text-slate-100">
-      <header className="border-b border-gray-200 bg-white px-5 py-5 sm:px-7">
+    <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col bg-white text-gray-900">
+      <header className="border-b border-gray-200 bg-white px-5 py-5 text-gray-900 sm:px-7">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="mb-3 flex items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center border border-gray-900 font-mono text-[10px] font-bold tracking-tight text-gray-900" aria-hidden="true">OC</span>
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-500">Order intelligence</span>
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-600">Order intelligence</span>
             </div>
             <h1 className="text-2xl font-semibold tracking-tight text-gray-950">Ask your orders.</h1>
-            <p className="mt-1 text-sm text-gray-500">A focused workspace for exploring e-commerce performance.</p>
+            <p className="mt-1 text-sm text-gray-600">A focused workspace for exploring e-commerce performance.</p>
           </div>
-          <div className="flex items-center gap-4 text-xs font-medium text-gray-500"><button type="button" onClick={() => setDarkMode((value) => !value)}>{darkMode ? "Light" : "Dark"}</button><button type="button" onClick={() => setShowSchema((value) => !value)}>Schema</button><button type="button" onClick={() => setShowHistory((value) => !value)}>History</button>{messages.length > 0 && <button type="button" onClick={() => window.confirm("Clear this conversation?") && setMessages([])}>Clear</button>}</div>
+          <div className="flex items-center gap-4 text-xs font-medium text-gray-700"><button type="button" onClick={() => setShowSchema((value) => !value)}>Schema</button><button type="button" onClick={() => setShowHistory((value) => !value)}>History</button>{messages.length > 0 && <button type="button" onClick={() => window.confirm("Clear this conversation?") && setMessages([])}>Clear</button>}</div>
         </div>
       </header>
 
-      {showHistory && <aside className="border-b border-gray-200 bg-slate-50 px-5 py-4 sm:px-7 dark:bg-slate-900"><p className="mb-3 text-sm font-semibold">Saved queries</p>{history.length ? history.map((item) => <button key={item} type="button" onClick={() => setQuestion(item)} className="block w-full truncate py-1 text-left text-sm text-gray-600 hover:text-gray-950 dark:text-slate-300">{item}</button>) : <p className="text-sm text-gray-500">Your recent questions will appear here.</p>}</aside>}
-      {showSchema && <aside className="border-b border-gray-200 bg-slate-50 px-5 py-4 sm:px-7 dark:bg-slate-900"><p className="mb-3 text-sm font-semibold">obt_orders schema</p><div className="grid gap-2 sm:grid-cols-2">{schemaColumns.map(([name, description]) => <div key={name} className="text-sm"><code className="font-medium text-emerald-700">{name}</code><p className="text-gray-500 dark:text-slate-400">{description}</p></div>)}</div></aside>}
+      {showHistory && <aside className="border-b border-gray-200 bg-slate-50 px-5 py-4 dark:border-slate-800 dark:bg-slate-900 sm:px-7"><p className="mb-3 text-sm font-semibold">Saved queries</p>{history.length ? history.map((item) => <button key={item} type="button" onClick={() => setQuestion(item)} className="block w-full truncate py-1 text-left text-sm text-gray-700 hover:text-gray-950 dark:text-slate-300 dark:hover:text-white">{item}</button>) : <p className="text-sm text-gray-600 dark:text-slate-400">Your recent questions will appear here.</p>}</aside>}
+      {showSchema && <aside className="border-b border-gray-200 bg-slate-50 px-5 py-4 dark:border-slate-800 dark:bg-slate-900 sm:px-7"><p className="mb-3 text-sm font-semibold">obt_orders schema</p><div className="grid gap-2 sm:grid-cols-2">{schemaColumns.map(([name, description]) => <div key={name} className="text-sm"><code className="font-medium text-emerald-700 dark:text-emerald-400">{name}</code><p className="text-gray-600 dark:text-slate-400">{description}</p></div>)}</div></aside>}
 
-      <main id="conversation" aria-label="Conversation" className="flex-1 overflow-y-auto bg-white px-5 py-8 sm:px-7 dark:bg-slate-950">
+      <main id="conversation" aria-label="Conversation" className="flex-1 overflow-y-auto bg-white px-5 py-8 sm:px-7">
         <section aria-labelledby="conversation-heading" className="space-y-8">
         {messages.length > 0 && (
           <h2 id="conversation-heading" className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-400">Conversation</h2>
         )}
         {messages.length === 0 && (
           <div className="border-y border-gray-200 py-8">
-            <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-400">Start a conversation</p>
-            <p className="mt-3 text-lg font-medium tracking-tight text-gray-900">What would you like to know?</p>
-            <p className="mt-1 text-sm text-gray-500">Ask in plain language. I’ll query the order data and explain the result.</p>
+            <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-500 dark:text-slate-400">Start a conversation</p>
+            <p className="mt-3 text-lg font-medium tracking-tight text-gray-900 dark:text-white">What would you like to know?</p>
+            <p className="mt-1 text-sm text-gray-600 dark:text-slate-400">Ask in plain language. I’ll query the order data and explain the result.</p>
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-3">
               {examples.map((example) => (
                 <button key={example} type="button" onClick={() => useExample(example)} className="border-b border-gray-300 pb-1 text-left text-xs text-gray-600 transition hover:border-gray-900 hover:text-gray-950">
@@ -347,7 +345,6 @@ function App() {
         </button>
       </form>
       </section>
-    </div>
     </div>
   );
 }
