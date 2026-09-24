@@ -67,17 +67,19 @@ def query(request: QuestionRequest):
         )
 
     try:
-        answer, preferred_view = generate_natural_language_answer(
+        answer, preferred_view, visualization = generate_natural_language_answer(
             request.question, safe_sql, rows
         )
     except Exception:
         logger.exception("Unable to generate natural-language answer")
         answer = "The query completed successfully. See the table view for the results."
         preferred_view = "table"
+        visualization = "table"
     return {
         "status": "ok",
         "answer": answer,
         "preferred_view": preferred_view,
+        "visualization": visualization,
         "sql": safe_sql,
         "rows": rows,
     }

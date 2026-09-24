@@ -77,15 +77,18 @@ def generate_sql(question: str) -> str:
 
 def generate_natural_language_answer(
     question: str, sql: str, rows: list[dict]
-) -> tuple[str, str]:
-    """Explain verified results and recommend summary or table presentation."""
+) -> tuple[str, str, str]:
+    """Explain verified results and recommend a safe presentation mode."""
     prompt = f"""You are an analytics answer writer.
 Answer the user's question using only the verified SQL result below.
 Return a JSON object with exactly these keys:
-{{"answer": "concise Markdown answer", "preferred_view": "summary"}}
-Use `summary` for a single metric or direct fact. Use `table` for rankings,
-breakdowns, lists, comparisons, or multiple rows where the table is the clearest
-primary answer. The answer should still be a concise Markdown explanation.
+{{"answer": "concise Markdown answer", "preferred_view": "summary", "visualization": "kpi"}}
+Use `summary` for a single metric or direct fact and `kpi` visualization for
+one or more aggregate metrics. Use `table` for detailed row-level results.
+Use `chart` visualization for grouped or time-series results, including
+breakdowns, trends, rankings, and comparisons. If visualization is `chart`,
+preferred_view must also be `chart`; the client must not present it as a raw
+table by default. The answer should still be a concise Markdown explanation.
 For a single metric, state the metric, value, and relevant time period naturally.
 Use **bold** for the key answer. If there are no rows, clearly say that no
 matching records were found. Never invent, estimate, or recompute values.
@@ -112,11 +115,16 @@ Result rows (first 50 rows): {json.dumps(rows[:50], default=str)}
         if not answer:
             raise ValueError("The answer was empty")
         preferred_view = result.get("preferred_view", "summary")
-        if preferred_view not in {"summary", "table"}:
+        visualization = result.get("visualization", "kpi")
+        if visualization not in {"kpi", "chart", "table"}:
+            visualization = "kpi"
+        if visualization == "chart":
+            preferred_view = "chart"
+        elif preferred_view not in {"summary", "table"}:
             preferred_view = "summary"
-        return answer, preferred_view
+        return answer, preferred_view, visualization
     except (ValueError, KeyError, TypeError, json.JSONDecodeError):
-        return _fallback_answer(rows), "summary"
+        return _fallback_answer(rows), "summary", "kpi"
 
 
 def _fallback_answer(rows: list[dict]) -> str:

@@ -2,7 +2,8 @@ export type QueryResponse =
   | {
       status: "ok";
       answer: string;
-      preferred_view: "summary" | "table";
+      preferred_view: "summary" | "table" | "chart";
+      visualization: "kpi" | "chart" | "table";
       sql: string;
       rows: Record<string, unknown>[];
     }
