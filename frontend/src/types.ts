@@ -1,5 +1,7 @@
 import type { QueryResponse } from "./api";
 
+export type Tab = "chat" | "data" | "methodology";
+
 export type ChatMessage =
   | { role: "user"; text: string; timestamp: number }
   | {

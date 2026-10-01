@@ -1,9 +1,8 @@
 import { formatColumnName, formatValue, pickMetricColumn } from "../utils/format";
-import { SparklesIcon } from "./icons";
 
 export function KpiCard({ rows }: { rows: Record<string, unknown>[] }) {
   const row = rows[0];
-  if (!row) return <p className="text-sm text-slate-500 dark:text-slate-400">No matching records were found.</p>;
+  if (!row) return <p className="text-sm text-stone-500 dark:text-stone-400">No matching records were found.</p>;
 
   const metricColumn = pickMetricColumn(row);
   const otherColumns = Object.keys(row).filter((column) => column !== metricColumn);
@@ -14,17 +13,12 @@ export function KpiCard({ rows }: { rows: Record<string, unknown>[] }) {
   const valueColumn = metricColumn ?? Object.keys(row)[0] ?? "";
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-emerald-200/70 bg-gradient-to-br from-emerald-50 to-teal-50 p-5 shadow-sm dark:border-emerald-900/50 dark:from-emerald-950/50 dark:to-teal-950/30">
-      <SparklesIcon className="absolute -right-2 -top-2 h-16 w-16 text-emerald-200/60 dark:text-emerald-800/40" />
-      <p className="relative text-xs font-semibold uppercase tracking-wide text-emerald-800/80 dark:text-emerald-300">
-        {label}
-      </p>
-      <p className="relative mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+    <div className="rounded-xl border border-stone-200 border-l-4 border-l-amber-500 bg-white p-5 shadow-sm dark:border-stone-800 dark:border-l-amber-500 dark:bg-stone-900">
+      <p className="text-xs font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">{label}</p>
+      <p className="mt-2 text-4xl font-bold tracking-tight text-stone-900 dark:text-white">
         {formatValue(value, valueColumn)}
       </p>
-      <p className="relative mt-2 text-xs font-medium text-emerald-800/70 dark:text-emerald-400">
-        Verified from the orders warehouse
-      </p>
+      <p className="mt-2 text-xs font-medium text-amber-700 dark:text-amber-500">Verified from the orders warehouse</p>
     </div>
   );
 }

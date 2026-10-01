@@ -2,15 +2,10 @@ import { useRef, useState } from "react";
 import { askQuestion, QueryError } from "../api";
 import type { ChatMessage } from "../types";
 
-const HISTORY_KEY = "orders-chat-history";
-
 export function useConversation() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [slowRequest, setSlowRequest] = useState(false);
-  const [history, setHistory] = useState<string[]>(
-    () => JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]"),
-  );
   const slowRequestTimer = useRef<number | null>(null);
 
   async function submitQuestion(rawQuestion: string) {
@@ -19,11 +14,6 @@ export function useConversation() {
 
     const timestamp = Date.now();
     setMessages((prev) => [...prev, { role: "user", text: trimmed, timestamp }]);
-    setHistory((prev) => {
-      const next = [trimmed, ...prev.filter((item) => item !== trimmed)].slice(0, 12);
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
-      return next;
-    });
     setLoading(true);
     setSlowRequest(false);
     slowRequestTimer.current = window.setTimeout(() => setSlowRequest(true), 4000);
@@ -75,7 +65,6 @@ export function useConversation() {
     messages,
     loading,
     slowRequest,
-    history,
     submitQuestion,
     setFeedback,
     toggleView,

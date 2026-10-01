@@ -27,7 +27,7 @@ export function AssistantBubble({
     <div className="space-y-3">
       {!showingTable && !showingChart && (
         <>
-          <div className="max-w-none text-sm leading-relaxed text-slate-800 [&_strong]:font-semibold [&_strong]:text-slate-950 dark:text-slate-200 dark:[&_strong]:text-white">
+          <div className="max-w-none text-sm leading-relaxed text-stone-800 [&_strong]:font-semibold [&_strong]:text-stone-950 dark:text-stone-200 dark:[&_strong]:text-white">
             <ReactMarkdown>{result.answer}</ReactMarkdown>
           </div>
           {/* A KPI card can only ever represent one row; guard against a
@@ -39,14 +39,14 @@ export function AssistantBubble({
       {showingChart && <ResultChart rows={result.rows} />}
       {showingTable && (
         <>
-          <div className="text-xs text-slate-500 dark:text-slate-400">
+          <div className="text-xs text-stone-500 dark:text-stone-400">
             {result.rows.length.toLocaleString()} {result.rows.length === 1 ? "result" : "results"}
           </div>
           <ResultTable rows={result.rows} />
         </>
       )}
 
-      <div className="flex flex-wrap items-center gap-1.5 border-t border-slate-100 pt-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center gap-1.5 border-t border-stone-100 pt-2.5 dark:border-stone-800">
         {(result.visualization === "chart" || result.visualization === "table") && (
           <ToolbarButton onClick={onToggleView} label={showingTable || showingChart ? "Summary" : result.visualization === "chart" ? "Chart" : "Table"}>
             {showingTable || showingChart ? <ChartIcon width={14} height={14} /> : result.visualization === "chart" ? <ChartIcon width={14} height={14} /> : <TableIcon width={14} height={14} />}
@@ -62,7 +62,7 @@ export function AssistantBubble({
           onClick={() => onFeedback("up")}
           label="Helpful"
           active={feedback === "up"}
-          activeClass="text-emerald-600 dark:text-emerald-400"
+          activeClass="text-amber-600 dark:text-amber-400"
         >
           <ThumbsUpIcon width={14} height={14} />
         </ToolbarButton>
@@ -70,15 +70,15 @@ export function AssistantBubble({
           onClick={() => onFeedback("down")}
           label="Not helpful"
           active={feedback === "down"}
-          activeClass="text-red-600 dark:text-red-400"
+          activeClass="text-rose-600 dark:text-rose-400"
         >
           <ThumbsDownIcon width={14} height={14} />
         </ToolbarButton>
         <details className="group ml-auto">
-          <summary className="cursor-pointer select-none list-none rounded-md px-2 py-1 font-mono text-[11px] text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200">
+          <summary className="cursor-pointer select-none list-none rounded-md px-2 py-1 font-mono text-[11px] text-stone-400 transition hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800 dark:hover:text-stone-200">
             View SQL
           </summary>
-          <pre className="mt-2 max-w-full overflow-x-auto whitespace-pre-wrap rounded-lg bg-slate-900 p-3 text-left text-xs text-slate-100 dark:bg-black">{result.sql}</pre>
+          <pre className="mt-2 max-w-full overflow-x-auto whitespace-pre-wrap rounded-lg bg-stone-900 p-3 text-left text-xs text-stone-100 dark:bg-black">{result.sql}</pre>
         </details>
       </div>
     </div>
@@ -104,7 +104,7 @@ function ToolbarButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100 ${active ? activeClass : ""}`}
+      className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-stone-500 transition hover:bg-stone-100 hover:text-stone-800 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100 ${active ? activeClass : ""}`}
     >
       {children}
       <span className="hidden sm:inline">{label}</span>
