@@ -54,7 +54,9 @@ def _client() -> OpenAI:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY is not set. Add it to your .env file.")
-    return OpenAI(api_key=api_key)
+    # Bound every call so a slow/hung provider request can't stall the
+    # request indefinitely, and retry transient failures once.
+    return OpenAI(api_key=api_key, timeout=20.0, max_retries=1)
 
 
 def generate_sql(question: str) -> str:
@@ -72,7 +74,10 @@ def generate_sql(question: str) -> str:
         ],
     )
 
-    return response.choices[0].message.content.strip()
+    content = response.choices[0].message.content
+    if not content:
+        return "CANNOT_ANSWER: The model returned an empty response."
+    return content.strip()
 
 
 def generate_natural_language_answer(

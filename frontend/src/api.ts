@@ -15,7 +15,8 @@ export class QueryError extends Error {}
 // local Vite development; using it in a deployed build makes the browser call
 // the visitor's own computer.
 const configuredApiBase = import.meta.env.VITE_API_BASE?.trim();
-const API_BASE = configuredApiBase || (import.meta.env.DEV ? "http://127.0.0.1:8000" : "");
+const API_BASE = (configuredApiBase || (import.meta.env.DEV ? "http://127.0.0.1:8000" : ""))
+  .replace(/\/+$/, "");
 
 export async function askQuestion(question: string): Promise<QueryResponse> {
   if (!API_BASE) {
