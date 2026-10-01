@@ -103,6 +103,9 @@ The answer should still be a concise Markdown explanation.
 For a single metric, state the metric, value, and relevant time period naturally.
 Use **bold** for the key answer. If there are no rows, clearly say that no
 matching records were found. Never invent, estimate, or recompute values.
+Always format currency/revenue figures with a leading $ and at most one
+decimal place (e.g. $12,345.6), and never add a thousands separator to a
+year, month, or other date-part number (e.g. write 2024, not 2,024).
 
 Question: {question}
 SQL: {sql}
@@ -176,6 +179,22 @@ def _fallback_answer(rows: list[dict]) -> str:
         return "**No matching records were found.**"
     if len(rows) == 1:
         values = list(rows[0].items())
-        details = ", ".join(f"**{key}:** {value}" for key, value in values)
+        details = ", ".join(f"**{key}:** {_format_fallback_value(key, value)}" for key, value in values)
         return f"The query returned **1 result**: {details}."
     return f"The query returned **{len(rows):,} results**. See the table view for the details."
+
+
+_CURRENCY_KEY_PATTERN = re.compile(r"revenue|price|amount|cost|sales", re.IGNORECASE)
+_DIMENSION_KEY_PATTERN = re.compile(r"(^|_)(year|month|day|quarter|id)$", re.IGNORECASE)
+
+
+def _format_fallback_value(key: str, value: object) -> object:
+    """Match the frontend's currency/dimension number formatting so the
+    deterministic fallback answer stays consistent with the rest of the UI."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return value
+    if _DIMENSION_KEY_PATTERN.search(key):
+        return round(value)
+    if _CURRENCY_KEY_PATTERN.search(key):
+        return f"${value:,.1f}"
+    return value

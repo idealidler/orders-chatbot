@@ -1,4 +1,4 @@
-import { formatColumnName, formatValue, pickMetricColumn } from "../utils/format";
+import { formatCompactValue, formatColumnName, formatValue, pickMetricColumn } from "../utils/format";
 
 const BAR_COLORS = ["bg-amber-600", "bg-amber-500", "bg-stone-700", "bg-amber-400"];
 
@@ -22,10 +22,10 @@ export function ResultChart({ rows }: { rows: Record<string, unknown>[] }) {
       <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-stone-400 dark:text-stone-500">
         {formatColumnName(valueColumn)} by {formatColumnName(labelColumn)}
       </p>
-      <div className="grid grid-cols-[2.5rem_1fr] gap-2">
+      <div className="grid grid-cols-[3rem_1fr] gap-2">
         <div className="flex h-52 flex-col justify-between py-0.5 text-right text-[10px] text-stone-400 dark:text-stone-500">
           {gridLines.map((value, i) => (
-            <span key={i}>{value.toLocaleString(undefined, { maximumFractionDigits: 1, notation: "compact" })}</span>
+            <span key={i}>{formatCompactValue(value, valueColumn)}</span>
           ))}
         </div>
         <div className="relative">
@@ -54,7 +54,7 @@ export function ResultChart({ rows }: { rows: Record<string, unknown>[] }) {
           </div>
         </div>
       </div>
-      <div className="mt-2 grid grid-cols-[2.5rem_1fr] gap-2">
+      <div className="mt-2 grid grid-cols-[3rem_1fr] gap-2">
         <div />
         <div className="flex gap-2 sm:gap-3">
           {bars.map((row, index) => (
