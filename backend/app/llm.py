@@ -3,6 +3,7 @@ strictly in the obt_orders schema. The LLM is instructed to refuse rather
 than guess when a question cannot be answered from the available columns."""
 import os
 import json
+import re
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -93,7 +94,12 @@ one or more aggregate metrics. Use `table` for detailed row-level results.
 Use `chart` visualization for grouped or time-series results, including
 breakdowns, trends, rankings, and comparisons. If visualization is `chart`,
 preferred_view must also be `chart`; the client must not present it as a raw
-table by default. The answer should still be a concise Markdown explanation.
+table by default. If the question explicitly asks for a chart, graph, plot,
+or trend/visualization (e.g. "show a chart of...", "plot...", "graph..."),
+you must use `chart` whenever the result has two or more rows with a
+plottable numeric value; only fall back to `kpi`/`table` if the result
+genuinely cannot be charted (a single row, or no numeric column at all).
+The answer should still be a concise Markdown explanation.
 For a single metric, state the metric, value, and relevant time period naturally.
 Use **bold** for the key answer. If there are no rows, clearly say that no
 matching records were found. Never invent, estimate, or recompute values.
@@ -127,9 +133,41 @@ Result rows (first 50 rows): {json.dumps(rows[:50], default=str)}
             preferred_view = "chart"
         elif preferred_view not in {"summary", "table"}:
             preferred_view = "summary"
+        visualization, preferred_view = _resolve_presentation(question, rows, visualization, preferred_view)
         return answer, preferred_view, visualization
     except (ValueError, KeyError, TypeError, json.JSONDecodeError):
-        return _fallback_answer(rows), "summary", "kpi"
+        visualization, preferred_view = _resolve_presentation(question, rows, "kpi", "summary")
+        return _fallback_answer(rows), preferred_view, visualization
+
+
+_CHART_REQUEST_PATTERN = re.compile(r"\b(chart|graph|plot|visuali[sz]e|visuali[sz]ation|trend line)\b", re.IGNORECASE)
+
+
+def _resolve_presentation(
+    question: str, rows: list[dict], visualization: str, preferred_view: str
+) -> tuple[str, str]:
+    """Correct the model's suggested presentation against the actual result
+    shape. A KPI card can only ever represent a single row; a multi-row
+    result mislabeled as `kpi` would otherwise silently render just the
+    first row and misrepresent the full answer (e.g. a 'top 5' ranking
+    collapsing to a card for only the first item)."""
+    columns = list(rows[0].keys()) if rows else []
+    has_numeric_column = any(
+        isinstance(rows[0][col], (int, float)) and not isinstance(rows[0][col], bool)
+        for col in columns
+    )
+    is_plottable = len(rows) >= 2 and len(columns) >= 2 and has_numeric_column and len(rows) <= 50
+
+    # The user explicitly asked for a chart/graph/plot: honor that whenever
+    # the data can actually be plotted, regardless of what the model chose.
+    if _CHART_REQUEST_PATTERN.search(question) and is_plottable:
+        return "chart", "chart"
+
+    if len(rows) <= 1 or visualization != "kpi":
+        return visualization, preferred_view
+    if is_plottable:
+        return "chart", "chart"
+    return "table", "table"
 
 
 def _fallback_answer(rows: list[dict]) -> str:
