@@ -8,7 +8,7 @@ export function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
 
   if (rows.length === 0) {
     return (
-      <p className="rounded-xl border border-dashed border-slate-300 px-4 py-5 text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+      <p className="rounded-xl border border-dashed border-stone-300 px-4 py-5 text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400">
         No matching records were found.
       </p>
     );
@@ -54,33 +54,33 @@ export function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
           Large result set — showing {pageSize} rows at a time.
         </p>
       )}
-      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+      <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
         <span className="font-medium">{rows.length.toLocaleString()} results</span>
         <button
           type="button"
           onClick={exportCsv}
-          className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 px-2.5 py-1.5 font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+          className="inline-flex items-center gap-1.5 rounded-md border border-stone-200 px-2.5 py-1.5 font-medium text-stone-700 transition hover:border-stone-300 hover:bg-stone-50 dark:border-stone-700 dark:text-stone-200 dark:hover:bg-stone-800"
         >
           <DownloadIcon width={14} height={14} /> Export CSV
         </button>
       </div>
-      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white shadow-sm dark:border-stone-700 dark:bg-stone-900">
         <table className="min-w-full border-collapse text-sm">
-          <thead className="bg-slate-50 dark:bg-slate-800/80">
+          <thead className="bg-stone-50 dark:bg-stone-800/80">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col}
                   scope="col"
-                  className="whitespace-nowrap border-b border-slate-200 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600 dark:border-slate-700 dark:text-slate-300"
+                  className="whitespace-nowrap border-b border-stone-200 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-stone-600 dark:border-stone-700 dark:text-stone-300"
                 >
                   <button
                     type="button"
                     onClick={() => toggleSort(col)}
-                    className="inline-flex items-center gap-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="inline-flex items-center gap-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
                   >
                     {formatColumnName(col)}
-                    <span className="text-slate-400">{sort?.column === col ? (sort.direction === "asc" ? "↑" : "↓") : "↕"}</span>
+                    <span className="text-stone-400">{sort?.column === col ? (sort.direction === "asc" ? "↑" : "↓") : "↕"}</span>
                   </button>
                 </th>
               ))}
@@ -90,10 +90,10 @@ export function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
             {visibleRows.map((row, i) => (
               <tr
                 key={i}
-                className="border-b border-slate-100 transition-colors last:border-b-0 even:bg-slate-50/60 hover:bg-emerald-50/60 dark:border-slate-800 dark:even:bg-slate-800/40 dark:hover:bg-slate-800"
+                className="border-b border-stone-100 transition-colors last:border-b-0 even:bg-stone-50/60 hover:bg-amber-50/60 dark:border-stone-800 dark:even:bg-stone-800/40 dark:hover:bg-stone-800"
               >
                 {columns.map((col) => (
-                  <td key={col} className="whitespace-nowrap px-4 py-3 text-slate-700 dark:text-slate-200">
+                  <td key={col} className="whitespace-nowrap px-4 py-3 text-stone-700 dark:text-stone-200">
                     {formatValue(row[col], col)}
                   </td>
                 ))}
@@ -103,7 +103,7 @@ export function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
         </table>
       </div>
       {pageCount > 1 && (
-        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
           <span>
             Page {page + 1} of {pageCount}
           </span>
@@ -112,7 +112,7 @@ export function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
               type="button"
               disabled={page === 0}
               onClick={() => setPage(page - 1)}
-              className="rounded-md border border-slate-200 px-2.5 py-1 font-medium transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:hover:bg-slate-800"
+              className="rounded-md border border-stone-200 px-2.5 py-1 font-medium transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-stone-700 dark:hover:bg-stone-800"
             >
               Previous
             </button>
@@ -120,7 +120,7 @@ export function ResultTable({ rows }: { rows: Record<string, unknown>[] }) {
               type="button"
               disabled={page === pageCount - 1}
               onClick={() => setPage(page + 1)}
-              className="rounded-md border border-slate-200 px-2.5 py-1 font-medium transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:hover:bg-slate-800"
+              className="rounded-md border border-stone-200 px-2.5 py-1 font-medium transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-stone-700 dark:hover:bg-stone-800"
             >
               Next
             </button>

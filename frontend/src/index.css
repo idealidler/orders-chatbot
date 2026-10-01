@@ -11,6 +11,10 @@
   text-rendering: optimizeLegibility;
 }
 
+.font-display {
+  font-family: "Fraunces", ui-serif, Georgia, serif;
+}
+
 html.dark {
   color-scheme: dark;
 }
@@ -29,14 +33,14 @@ textarea {
 
 button:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #059669;
+  outline: 2px solid #b45309;
   outline-offset: 3px;
 }
 
-/* Slim scrollbars for the conversation and sidebar panes. */
+/* Slim scrollbars for the conversation pane, tuned to the warm neutral palette. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(148 163 184 / 0.5) transparent;
+  scrollbar-color: rgb(168 162 158 / 0.5) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -45,7 +49,7 @@ textarea:focus-visible {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: rgb(148 163 184 / 0.5);
+  background-color: rgb(168 162 158 / 0.5);
   border-radius: 9999px;
 }
 
