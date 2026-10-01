@@ -5,7 +5,7 @@ import os
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 
 from .db import run_query
 from .llm import generate_natural_language_answer, generate_sql
@@ -20,7 +20,7 @@ app = FastAPI(title="Orders Chatbot API")
 # "http://localhost:5173,https://orders-chatbot.vercel.app"
 _default_origins = "http://localhost:5173"
 allowed_origins = [
-    origin.strip()
+    origin.strip().rstrip("/")
     for origin in os.environ.get("CORS_ORIGINS", _default_origins).split(",")
     if origin.strip()
 ]
@@ -28,6 +28,10 @@ allowed_origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
+    # Support Vercel preview deployments as well as the explicitly configured
+    # production/custom-domain origins. Custom domains still belong in
+    # CORS_ORIGINS.
+    allow_origin_regex=r"https://([a-zA-Z0-9-]+\.)?vercel\.app$|http://localhost(:\d+)?$|http://127\.0\.0\.1(:\d+)?$",
     allow_methods=["POST"],
     allow_headers=["*"],
 )
@@ -39,7 +43,15 @@ def health():
 
 
 class QuestionRequest(BaseModel):
-    question: str
+    question: str = Field(..., min_length=1, max_length=500)
+
+    @field_validator("question")
+    @classmethod
+    def strip_question(cls, value: str) -> str:
+        stripped = value.strip()
+        if not stripped:
+            raise ValueError("Question cannot be blank.")
+        return stripped
 
 
 @app.post("/query")

@@ -16,9 +16,14 @@ MANIFEST_PATH = (
 MODEL_NODE_ID = "model.orders_chatbot.obt_orders"
 
 
+@lru_cache(maxsize=1)
 def load_obt_schema_context() -> str:
     """Return a formatted text block describing the obt_orders table and
-    its columns, for inclusion in the LLM system prompt."""
+    its columns, for inclusion in the LLM system prompt.
+
+    Cached because the manifest is static for the life of the process and
+    re-parsing it on every request would add needless latency and I/O to
+    every single chatbot turn."""
     with open(MANIFEST_PATH) as f:
         manifest = json.load(f)
 
