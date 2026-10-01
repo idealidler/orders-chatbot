@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import type { QueryResponse } from "../api";
 import { KpiCard } from "./KpiCard";
+import { DonutChart } from "./DonutChart";
 import { ResultChart } from "./ResultChart";
 import { ResultTable } from "./ResultTable";
 import { ChartIcon, CopyIcon, RefreshIcon, TableIcon, ThumbsDownIcon, ThumbsUpIcon } from "./icons";
@@ -34,9 +35,10 @@ export function AssistantBubble({
               multi-row result being mislabeled and silently showing just
               the first record. */}
           {result.visualization === "kpi" && (result.rows.length <= 1 ? <KpiCard rows={result.rows} /> : <ResultChart rows={result.rows} />)}
+          {result.visualization === "donut" && <DonutChart rows={result.rows} />}
         </>
       )}
-      {showingChart && <ResultChart rows={result.rows} />}
+      {showingChart && (result.visualization === "donut" ? <DonutChart rows={result.rows} /> : <ResultChart rows={result.rows} />)}
       {showingTable && (
         <>
           <div className="text-xs text-stone-500 dark:text-stone-400">
@@ -47,9 +49,9 @@ export function AssistantBubble({
       )}
 
       <div className="flex flex-wrap items-center gap-1.5 border-t border-stone-100 pt-2.5 dark:border-stone-800">
-        {(result.visualization === "chart" || result.visualization === "table") && (
-          <ToolbarButton onClick={onToggleView} label={showingTable || showingChart ? "Summary" : result.visualization === "chart" ? "Chart" : "Table"}>
-            {showingTable || showingChart ? <ChartIcon width={14} height={14} /> : result.visualization === "chart" ? <ChartIcon width={14} height={14} /> : <TableIcon width={14} height={14} />}
+        {(result.visualization === "chart" || result.visualization === "donut" || result.visualization === "table") && (
+          <ToolbarButton onClick={onToggleView} label={showingTable || showingChart ? "Summary" : result.visualization === "table" ? "Table" : "Chart"}>
+            {showingTable || showingChart || result.visualization !== "table" ? <ChartIcon width={14} height={14} /> : <TableIcon width={14} height={14} />}
           </ToolbarButton>
         )}
         <ToolbarButton onClick={() => navigator.clipboard?.writeText(result.answer)} label="Copy">

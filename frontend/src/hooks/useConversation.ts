@@ -51,7 +51,7 @@ export function useConversation() {
     setMessages((prev) =>
       prev.map((item, i) => {
         if (i !== index || item.role !== "assistant") return item;
-        const nextView = item.view === "summary" ? (item.result.visualization === "chart" ? "chart" : "table") : "summary";
+        const nextView = item.view === "summary" ? (item.result.visualization === "chart" || item.result.visualization === "donut" ? "chart" : "table") : "summary";
         return { ...item, view: nextView };
       }),
     );
