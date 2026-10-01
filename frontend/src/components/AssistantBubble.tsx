@@ -30,7 +30,10 @@ export function AssistantBubble({
           <div className="max-w-none text-sm leading-relaxed text-slate-800 [&_strong]:font-semibold [&_strong]:text-slate-950 dark:text-slate-200 dark:[&_strong]:text-white">
             <ReactMarkdown>{result.answer}</ReactMarkdown>
           </div>
-          {result.visualization === "kpi" && <KpiCard rows={result.rows} />}
+          {/* A KPI card can only ever represent one row; guard against a
+              multi-row result being mislabeled and silently showing just
+              the first record. */}
+          {result.visualization === "kpi" && (result.rows.length <= 1 ? <KpiCard rows={result.rows} /> : <ResultChart rows={result.rows} />)}
         </>
       )}
       {showingChart && <ResultChart rows={result.rows} />}
