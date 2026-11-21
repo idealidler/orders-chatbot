@@ -50,3 +50,4 @@ export async function askQuestion(question: string): Promise<QueryResponse> {
 
   return normalizeQueryResponse(await res.json());
 }
+
