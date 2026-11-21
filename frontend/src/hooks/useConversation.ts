@@ -29,7 +29,9 @@ export function useConversation() {
         ]);
       }
     } catch (err) {
-      const text = err instanceof QueryError ? err.message : "Network error. Please try again.";
+      const text = err instanceof QueryError
+        ? err.message
+        : "Unable to reach the chatbot backend. Check VITE_API_BASE and the backend health endpoint, then try again.";
       setMessages((prev) => [...prev, { role: "assistant-error", text, timestamp: Date.now() }]);
     } finally {
       if (slowRequestTimer.current !== null) {
