@@ -11,6 +11,19 @@ export type QueryResponse =
 
 export class QueryError extends Error {}
 
+function describeRequestFailure(endpoint: string, error: unknown): QueryError {
+  const reason = error instanceof Error ? error.message : String(error);
+  console.error("[orders-chatbot] request failed", {
+    endpoint,
+    pageOrigin: window.location.origin,
+    reason,
+    error,
+  });
+  return new QueryError(
+    `Could not reach ${endpoint}. Browser error: ${reason}. Check the browser console for CORS or network details.`,
+  );
+}
+
 function normalizeQueryResponse(payload: unknown): QueryResponse {
   if (!payload || typeof payload !== "object") throw new QueryError("The response was not in a usable format. Please try again.");
   const data = payload as Record<string, unknown>;
@@ -37,11 +50,17 @@ export async function askQuestion(question: string): Promise<QueryResponse> {
     throw new QueryError("Backend URL is not configured. Set VITE_API_BASE in Vercel and redeploy.");
   }
 
-  const res = await fetch(`${API_BASE}/query`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question }),
-  });
+  const endpoint = `${API_BASE}/query`;
+  let res: Response;
+  try {
+    res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question }),
+    });
+  } catch (error) {
+    throw describeRequestFailure(endpoint, error);
+  }
 
   if (!res.ok) {
     const body = await res.json().catch(() => null);
