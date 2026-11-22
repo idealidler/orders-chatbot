@@ -45,7 +45,7 @@ export function Composer({
               formRef.current?.requestSubmit();
             }
           }}
-          placeholder="Ask a question about your orders…"
+          placeholder="Try “Revenue by month in 2024”…"
           aria-label="Question about your orders"
           className="min-w-0 flex-1 resize-none overflow-y-auto border-0 bg-transparent px-2 py-2 text-sm leading-6 text-stone-900 outline-none placeholder:text-stone-400 focus:ring-0 dark:text-white"
         />
@@ -62,8 +62,8 @@ export function Composer({
           <SendIcon width={16} height={16} />
         </button>
       </form>
-      <p className="mx-auto mt-2 max-w-3xl text-center text-[11px] text-stone-400 dark:text-stone-500">
-        Answers are generated from your order data and may be imprecise. Verify important figures.
+      <p className="mx-auto mt-2 flex max-w-3xl justify-center gap-2 text-center text-[11px] text-stone-400 dark:text-stone-500">
+        <span>Enter to send</span><span aria-hidden="true">·</span><span>Shift + Enter for a new line</span>
       </p>
     </section>
   );

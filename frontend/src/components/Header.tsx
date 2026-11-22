@@ -31,7 +31,7 @@ export function Header({
           </span>
           <div className="min-w-0">
             <h1 className="font-display truncate text-base font-semibold tracking-tight text-stone-950 dark:text-white">Order Intelligence</h1>
-            <p className="truncate text-xs text-stone-500 dark:text-stone-400">Ask anything about your orders, in plain language.</p>
+            <p className="truncate text-xs text-stone-500 dark:text-stone-400">Ask questions. Get clear answers.</p>
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
@@ -57,14 +57,14 @@ export function Header({
           </button>
         </div>
       </div>
-      <nav aria-label="Sections" className="flex gap-1 px-4 sm:px-6">
+      <nav aria-label="Sections" className="flex gap-1 overflow-x-auto px-4 sm:px-6">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => onSelectTab(tab.id)}
             aria-current={activeTab === tab.id ? "page" : undefined}
-            className={`relative px-3 py-2.5 text-sm font-medium transition ${
+            className={`relative whitespace-nowrap px-3 py-2.5 text-sm font-medium transition ${
               activeTab === tab.id
                 ? "text-amber-700 dark:text-amber-400"
                 : "text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-100"
