@@ -19,11 +19,14 @@ app = FastAPI(title="Orders Chatbot API")
 # Comma-separated list of allowed frontend origins, e.g.
 # "http://localhost:5173,https://orders-chatbot.vercel.app"
 _default_origins = "http://localhost:5173"
+configured_origins = os.environ.get("CORS_ORIGINS") or os.environ.get("CORS_ORIGIN") or _default_origins
 allowed_origins = [
     origin.strip().rstrip("/")
-    for origin in os.environ.get("CORS_ORIGINS", _default_origins).split(",")
+    for origin in configured_origins.split(",")
     if origin.strip()
 ]
+
+logger.info("CORS configured for origins: %s", allowed_origins)
 
 app.add_middleware(
     CORSMiddleware,
@@ -56,7 +59,14 @@ class QuestionRequest(BaseModel):
 
 @app.post("/query")
 def query(request: QuestionRequest):
-    llm_output = generate_sql(request.question)
+    try:
+        llm_output = generate_sql(request.question)
+    except Exception as exc:
+        logger.exception("LLM SQL generation failed for question %r", request.question)
+        raise HTTPException(
+            status_code=502,
+            detail=f"The backend could not contact the language model: {exc}",
+        ) from exc
 
     if llm_output.startswith("CANNOT_ANSWER"):
         reason = llm_output.split(":", 1)[1].strip() if ":" in llm_output else ""
