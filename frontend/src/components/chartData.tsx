@@ -1,6 +1,6 @@
-import { formatColumnName, formatValue, pickMetricColumn } from "../utils/format";
+import { formatColumnName, formatCompactValue, formatValue, pickMetricColumn } from "../utils/format";
 
-export type ChartDatum = { label: string; value: number; formattedValue: string };
+export type ChartDatum = { label: string; value: number; formattedValue: string; fullValue: string };
 export type ChartData = { labelColumn: string; valueColumn: string; title: string; data: ChartDatum[] };
 type UnknownRow = Record<string, unknown>;
 
@@ -20,7 +20,12 @@ export function mapRowsToChartData(rows: unknown, limit = 12): ChartData | null 
   const data = rows.filter(isRow).slice(0, limit).map((row) => {
     const value = row[valueColumn];
     if (typeof value !== "number" || !Number.isFinite(value) || value < 0) return null;
-    return { label: formatValue(row[labelColumn], labelColumn), value, formattedValue: formatValue(value, valueColumn) };
+    return {
+      label: formatValue(row[labelColumn], labelColumn),
+      value,
+      formattedValue: formatCompactValue(value, valueColumn),
+      fullValue: formatValue(value, valueColumn),
+    };
   }).filter((datum): datum is ChartDatum => datum !== null);
   if (!data.length) return null;
   return { labelColumn, valueColumn, title: `${formatColumnName(valueColumn)} by ${formatColumnName(labelColumn)}`, data };
