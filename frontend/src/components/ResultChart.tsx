@@ -2,8 +2,6 @@ import { formatCompactValue } from "../utils/format";
 import { ChartEmptyState } from "./ChartEmptyState";
 import { mapRowsToChartData } from "./chartData";
 
-const BAR_COLORS = ["bg-amber-600", "bg-amber-500", "bg-stone-700", "bg-amber-400"];
-
 const GRID_STEPS = 4;
 
 export function ResultChart({ rows }: { rows: unknown }) {
@@ -38,12 +36,13 @@ export function ResultChart({ rows }: { rows: unknown }) {
               const heightPct = datum.value === 0 ? 0 : Math.max((datum.value / max) * 100, 2);
               return (
                 <div key={`${datum.label}-${index}`} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end">
-                  <span className="mb-1 max-w-full truncate text-center text-[10px] font-medium tabular-nums text-stone-700 dark:text-stone-200" title={datum.formattedValue}>
+                  <span className="mb-1 max-w-full truncate text-center text-[10px] font-medium tabular-nums text-stone-700 dark:text-stone-200" title={datum.fullValue}>
                     {datum.formattedValue}
                   </span>
                   <div
-                    className={`w-full min-w-1 rounded-t-sm ${BAR_COLORS[index % BAR_COLORS.length]} transition-all duration-500`}
+                    className="w-full min-w-1 rounded-t-sm bg-amber-600 transition-all duration-500 dark:bg-amber-500"
                     style={{ height: `${heightPct}%` }}
+                    title={`${datum.label}: ${datum.fullValue}`}
                     aria-label={`${datum.label}: ${datum.formattedValue}`}
                   />
                 </div>
